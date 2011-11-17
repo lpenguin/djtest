@@ -1,0 +1,166 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% block title %}{% trans "Test editing" %}{% endblock %}
+
+{% block extrahead %}
+<script type="text/javascript" src="/static/javascript/jquery.js"></script>
+<script type="text/javascript" src="/static/javascript/underscore.js"></script>
+<script type="text/javascript" src="/static/javascript/backbone.js"></script>
+<script type="text/javascript" src="/static/javascript/jquery.tmpl.js"></script>
+<script type="text/javascript" src="/static/javascript/json2.js"></script>
+<script type="text/javascript" src="/static/javascript/backbone-refmodel.js"></script>
+<script type="text/javascript" src="/static/javascript/test-editor.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/test-editor.css" />
+
+<!-- redactor -->
+<script type="text/javascript" src="/static/javascript/redactor/redactor.js"></script>
+<link rel="stylesheet" href="/static/javascript/redactor/css/redactor.css" type="text/css" />
+
+<script type="text/javascript">
+	$(document).ready(function($) {		
+		testChangeUrl = "{% url admin:testsys_test_change object_id %}";
+
+		csrfTocken = "{% csrf_token %}";
+		var testData = {% if test.data %} {{test.data|safe}} {%else%} {} {% endif %};
+		scales = new Scales([
+		{% for scale in scales %}
+			new Scale({ 
+				name: "{{scale.name}}", 
+				description: "{{scale.description}}"
+			}),
+		{% endfor %}
+		
+		]);
+		test = new Test( testData );
+		Backbone.history.start();
+		//var view = new TestView({model: new Test( testData ) });
+		//view.render();
+		 //alert(JSON.stringify( view.model.toJSON() ) );
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="app"></div>
+
+<!--Templates -->
+
+<script type="text/x-jquery-tmpl" id="choice-task-template" >
+	<h3>{% trans "Task editing" %}</h3>
+	<div name="main" class="">
+		<h4>{% trans "Data" %}</h4>
+		<label for="name">{% trans "Name" %}</label> <br/>
+		<input type="text" name="name" value="${model.get('name')}" /> <br/>
+		<label for="description">{% trans "Description" %}</label> </br>
+		<textarea name="description" class="rich">${model.get('description')}</textarea>	
+	</div>
+	<div name="choices">
+		<h4>{% trans "Choices" %}</h4>
+		<table name="choices-table">
+		<thead>
+			<th>{% trans "Num" %}</th>
+			<th>{% trans "Text" %}</th>
+			<th>{% trans "Scale" %}</th>
+			<th>{% trans "Value" %}</th>
+			<th>{% trans "Action" %}</th>
+		</thead>
+			<tfoot>
+				<tr >
+					<td colspan=5>
+						<button name="save-button">{% trans "Save" %}</button> 
+						<button name="cancel-button" >{% trans "Cancel" %}</button>
+						<button name="add-button">{% trans "Add choice" %}</button>
+					</td>
+				</tr>
+			</tfoot>
+		<tbody>
+		</tbody>
+		</table>
+	</div>
+	
+</script>
+
+<script type="text/x-jquery-tmpl" id="task-elem-template" >
+	<td>
+		<a href="#task/${model.cid}">${model.get("name")}</a>
+	</td>
+	<td class="last">
+		<button name="delete-button">{% trans "Delete" %}</button>
+	</td>
+</script>
+
+<script type="text/x-jquery-tmpl" id="choice-template" >
+	<td>#${model.get("number")}</td>
+	<td>
+		<input name="text" value="${model.get('text')}" type="text" />
+	</td>
+	<td><select name="scale" /></td>
+	<td>
+		<input name="value" value="${model.get('value')}" type="text" />
+	</td>
+	<td>
+		<button name="delete-button"">{% trans "Delete" %}</button>
+	</td>>
+</script>
+
+<script type="text/x-jquery-tmpl" id="test-template" >
+<form action="." name="main-form" method="post">
+	{% csrf_token %}
+	<input type='hidden' name='data'>
+    <h3>{% trans "Test editing" %}</h3>
+	{{ test.name }}
+	<h4>{% trans "Tasks" %}</h4>
+	<table name="tasks-table" class="tasks-table">
+		<thead>
+			<th>{% trans "Name" %}</th>
+			<th>{% trans "Action" %}</th>
+		</thead>
+		<tfoot>
+			<tr>
+					<td colspan=2>
+					    <button name="save-button">{% trans "Save" %}</button>
+					    <button name="cancel-button">{% trans "Cancel" %}</button>
+						<button name="add-button">{% trans "Add task" %}</button>
+					</td>
+				</tr>
+		</tfoot>
+		<tbody>
+		</tbody>
+	</table>
+    <!--<ul name="tasks-ul" class="test-editor"></ul>-->
+    <div id="dialog"></div>
+    <hr />
+    <br />
+	<!--<a href="{% url admin:testsys_test_change object_id %}">Back</a>-->
+</form>
+</script>
+
+<script type="text/x-jquery-tmpl" id="new-task-template" >
+	<h4>{% trans "New task" %}</h4>
+	<table class="tasks-table">
+		<thead>
+			<th>Name</th>
+			<th>Type</th>
+		</thead>
+		<tfoot>
+			<tr>
+					<td colspan=2>
+						<button name="continue-button">{% trans "Continue" %}</button>
+						<button name="cancel-button">{% trans "Cancel" %}</button>
+					</td>
+				</tr>
+		</tfoot>
+		<tbody>
+			<tr>
+				<td>
+					<input type="text" name="task-name" value="" />
+				</td>
+				<td>
+					<select name="task-type"></select>
+				</td>
+
+			</tr>
+		</tbody>
+	</table>
+</script>
+{% endblock %}

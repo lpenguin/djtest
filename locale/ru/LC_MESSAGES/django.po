@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-17 15:08+0400\n"
+"PO-Revision-Date: 2011-11-17 15:07+0300\n"
+"Last-Translator: lpenguin <lpenguin@yandex.ru>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: templates/admin/test_change.html:4
+msgid "Edit test"
+msgstr "Редактировать тест"
+
+#: templates/admin/test_edit.html:3 templates/admin/test_edit.html.py:110
+msgid "Test editing"
+msgstr "Редактирование теста"
+
+#: templates/admin/test_edit.html:49
+msgid "Task editing"
+msgstr "Редактирование задания"
+
+#: templates/admin/test_edit.html:51 testsys/models.py:18
+msgid "Data"
+msgstr "Данные"
+
+#: templates/admin/test_edit.html:52 templates/admin/test_edit.html.py:115
+#: testsys/models.py:5 testsys/models.py:15 testsys/models.py:27
+msgid "Name"
+msgstr "Имя"
+
+#: templates/admin/test_edit.html:54 testsys/models.py:6 testsys/models.py:16
+#: testsys/models.py:28
+msgid "Description"
+msgstr "Описание"
+
+#: templates/admin/test_edit.html:58
+msgid "Choices"
+msgstr "Пункты"
+
+#: templates/admin/test_edit.html:61
+msgid "Num"
+msgstr "Номер"
+
+#: templates/admin/test_edit.html:62
+msgid "Text"
+msgstr "Текст"
+
+#: templates/admin/test_edit.html:63 testsys/models.py:33
+msgid "Scale"
+msgstr "Шкала"
+
+#: templates/admin/test_edit.html:64
+msgid "Value"
+msgstr "Значение"
+
+#: templates/admin/test_edit.html:65 templates/admin/test_edit.html.py:116
+msgid "Action"
+msgstr "Действие"
+
+#: templates/admin/test_edit.html:70 templates/admin/test_edit.html.py:121
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/admin/test_edit.html:71 templates/admin/test_edit.html.py:122
+#: templates/admin/test_edit.html:149
+msgid "Cancel"
+msgstr "Отмена"
+
+#: templates/admin/test_edit.html:72
+msgid "Add choice"
+msgstr "Добавить пункт"
+
+#: templates/admin/test_edit.html:88 templates/admin/test_edit.html.py:102
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/admin/test_edit.html:112
+msgid "Tasks"
+msgstr "Задания"
+
+#: templates/admin/test_edit.html:123
+msgid "Add task"
+msgstr "Добавить задание"
+
+#: templates/admin/test_edit.html:139
+msgid "New task"
+msgstr "Новое задание"
+
+#: templates/admin/test_edit.html:148
+msgid "Continue"
+msgstr "Далее"
+
+#: testsys/models.py:11 testsys/models.py:17
+msgid "Property"
+msgstr ""
+
+#: testsys/models.py:12
+msgid "Properties"
+msgstr ""
+
+#: testsys/models.py:23 testsys/models.py:29
+msgid "Test"
+msgstr ""
+
+#: testsys/models.py:24
+msgid "Tests"
+msgstr ""
+
+#: testsys/models.py:34
+#, fuzzy
+msgid "Scales"
+msgstr "Шкала"
