@@ -31,7 +31,12 @@ table[name=tasks-table] td.last{
 
 textarea[name=description]{
     width: 700px;
-    height: 100px;
+    height: 250px;
+}
+
+textarea[name=text]{
+    width: 700px;
+    height: 150px;
 }
 
 input[name=name]{

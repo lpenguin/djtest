@@ -7,117 +7,151 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-17 15:08+0400\n"
+"POT-Creation-Date: 2011-11-21 21:42+0300\n"
 "PO-Revision-Date: 2011-11-17 15:07+0300\n"
 "Last-Translator: lpenguin <lpenguin@yandex.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: \n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: templates/admin/test_change.html:4
+#: .\templates\admin\test_change.html.py:6
 msgid "Edit test"
 msgstr "Редактировать тест"
 
-#: templates/admin/test_edit.html:3 templates/admin/test_edit.html.py:110
+#: .\templates\admin\test_edit.html.py:3
+#: .\templates\admin\test_edit.html.py:162
 msgid "Test editing"
 msgstr "Редактирование теста"
 
-#: templates/admin/test_edit.html:49
+#: .\templates\admin\test_edit.html.py:48
+#: .\templates\admin\test_edit.html.py:87
 msgid "Task editing"
 msgstr "Редактирование задания"
 
-#: templates/admin/test_edit.html:51 testsys/models.py:18
+#: .\templates\admin\test_edit.html.py:50
+#: .\templates\admin\test_edit.html.py:89 .\testsys\models.py:19
 msgid "Data"
 msgstr "Данные"
 
-#: templates/admin/test_edit.html:52 templates/admin/test_edit.html.py:115
-#: testsys/models.py:5 testsys/models.py:15 testsys/models.py:27
+#: .\templates\admin\test_edit.html.py:51
+#: .\templates\admin\test_edit.html.py:90
+#: .\templates\admin\test_edit.html.py:167 .\testsys\models.py:6
+#: .\testsys\models.py:16 .\testsys\models.py:41
 msgid "Name"
 msgstr "Имя"
 
-#: templates/admin/test_edit.html:54 testsys/models.py:6 testsys/models.py:16
-#: testsys/models.py:28
+#: .\templates\admin\test_edit.html.py:53
+#: .\templates\admin\test_edit.html.py:92
+msgid "Time"
+msgstr ""
+
+#: .\templates\admin\test_edit.html.py:56
+#: .\templates\admin\test_edit.html.py:95 .\testsys\models.py:7
+#: .\testsys\models.py:17 .\testsys\models.py:42
 msgid "Description"
 msgstr "Описание"
 
-#: templates/admin/test_edit.html:58
+#: .\templates\admin\test_edit.html.py:61
 msgid "Choices"
 msgstr "Пункты"
 
-#: templates/admin/test_edit.html:61
+#: .\templates\admin\test_edit.html.py:64
+#: .\templates\admin\test_edit.html.py:105
 msgid "Num"
 msgstr "Номер"
 
-#: templates/admin/test_edit.html:62
+#: .\templates\admin\test_edit.html.py:65
+#: .\templates\admin\test_edit.html.py:100
+#: .\templates\admin\test_edit.html.py:101
 msgid "Text"
 msgstr "Текст"
 
-#: templates/admin/test_edit.html:63 testsys/models.py:33
+#: .\templates\admin\test_edit.html.py:66 .\testsys\models.py:47
 msgid "Scale"
 msgstr "Шкала"
 
-#: templates/admin/test_edit.html:64
+#: .\templates\admin\test_edit.html.py:67
 msgid "Value"
 msgstr "Значение"
 
-#: templates/admin/test_edit.html:65 templates/admin/test_edit.html.py:116
+#: .\templates\admin\test_edit.html.py:68
+#: .\templates\admin\test_edit.html.py:107
+#: .\templates\admin\test_edit.html.py:168
 msgid "Action"
 msgstr "Действие"
 
-#: templates/admin/test_edit.html:70 templates/admin/test_edit.html.py:121
+#: .\templates\admin\test_edit.html.py:73
+#: .\templates\admin\test_edit.html.py:112
+#: .\templates\admin\test_edit.html.py:173
 msgid "Save"
 msgstr "Сохранить"
 
-#: templates/admin/test_edit.html:71 templates/admin/test_edit.html.py:122
-#: templates/admin/test_edit.html:149
+#: .\templates\admin\test_edit.html.py:74
+#: .\templates\admin\test_edit.html.py:113
+#: .\templates\admin\test_edit.html.py:174
+#: .\templates\admin\test_edit.html.py:201
 msgid "Cancel"
 msgstr "Отмена"
 
-#: templates/admin/test_edit.html:72
+#: .\templates\admin\test_edit.html.py:75
 msgid "Add choice"
 msgstr "Добавить пункт"
 
-#: templates/admin/test_edit.html:88 templates/admin/test_edit.html.py:102
+#: .\templates\admin\test_edit.html.py:106
+msgid "Word"
+msgstr ""
+
+#: .\templates\admin\test_edit.html.py:114
+msgid "Add word"
+msgstr ""
+
+#: .\templates\admin\test_edit.html.py:131
+#: .\templates\admin\test_edit.html.py:140
+#: .\templates\admin\test_edit.html.py:154
 msgid "Delete"
 msgstr "Удалить"
 
-#: templates/admin/test_edit.html:112
+#: .\templates\admin\test_edit.html.py:164
 msgid "Tasks"
 msgstr "Задания"
 
-#: templates/admin/test_edit.html:123
+#: .\templates\admin\test_edit.html.py:175
 msgid "Add task"
 msgstr "Добавить задание"
 
-#: templates/admin/test_edit.html:139
+#: .\templates\admin\test_edit.html.py:191
 msgid "New task"
 msgstr "Новое задание"
 
-#: templates/admin/test_edit.html:148
+#: .\templates\admin\test_edit.html.py:200
 msgid "Continue"
 msgstr "Далее"
 
-#: testsys/models.py:11 testsys/models.py:17
+#: .\testsys\models.py:12 .\testsys\models.py:18
 msgid "Property"
 msgstr ""
 
-#: testsys/models.py:12
+#: .\testsys\models.py:13
 msgid "Properties"
 msgstr ""
 
-#: testsys/models.py:23 testsys/models.py:29
+#: .\testsys\models.py:20
+msgid "Order"
+msgstr ""
+
+#: .\testsys\models.py:37 .\testsys\models.py:43
 msgid "Test"
 msgstr ""
 
-#: testsys/models.py:24
+#: .\testsys\models.py:38
 msgid "Tests"
 msgstr ""
 
-#: testsys/models.py:34
+#: .\testsys\models.py:48
 #, fuzzy
 msgid "Scales"
 msgstr "Шкала"

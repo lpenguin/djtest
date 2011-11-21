@@ -44,15 +44,18 @@
 <div id="app"></div>
 
 <!--Templates -->
-
 <script type="text/x-jquery-tmpl" id="choice-task-template" >
 	<h3>{% trans "Task editing" %}</h3>
 	<div name="main" class="">
 		<h4>{% trans "Data" %}</h4>
 		<label for="name">{% trans "Name" %}</label> <br/>
 		<input type="text" name="name" value="${model.get('name')}" /> <br/>
+		<label for="time">{% trans "Time" %}</label> <br/>
+		<input type="text" name="time" value="${model.get('time')}" /> <br/>	
+		
 		<label for="description">{% trans "Description" %}</label> </br>
-		<textarea name="description" class="rich">${model.get('description')}</textarea>	
+		<textarea name="description" class="rich">${model.get('description')}</textarea>
+
 	</div>
 	<div name="choices">
 		<h4>{% trans "Choices" %}</h4>
@@ -80,6 +83,55 @@
 	
 </script>
 
+<script type="text/x-jquery-tmpl" id="word-task-template" >
+	<h3>{% trans "Task editing" %}</h3>
+	<div name="main" class="">
+		<h4>{% trans "Data" %}</h4>
+		<label for="name">{% trans "Name" %}</label> <br/>
+		<input type="text" name="name" value="${model.get('name')}" /> <br/>
+		<label for="time">{% trans "Time" %}</label> <br/>
+		<input type="text" name="time" value="${model.get('time')}" /> <br/>	
+		
+		<label for="description">{% trans "Description" %}</label> </br>
+		<textarea name="description" class="rich">${model.get('description')}</textarea>
+
+	</div>
+	<div name="data">
+		<h4>{% trans "Text" %}</h4>
+		<!--<label for="text">{% trans "Text" %}</label> </br>-->
+		<textarea name="text">${model.get('text')}</textarea>
+		<table name="words-table">
+		<thead>
+			<th>{% trans "Num" %}</th>
+			<th>{% trans "Word" %}</th>
+			<th>{% trans "Action" %}</th>
+		</thead>
+			<tfoot>
+				<tr >
+					<td colspan=5>
+						<button name="save-button">{% trans "Save" %}</button> 
+						<button name="cancel-button" >{% trans "Cancel" %}</button>
+						<button name="add-button">{% trans "Add word" %}</button>
+					</td>
+				</tr>
+			</tfoot>
+		<tbody>
+		</tbody>
+		</table>
+	</div>
+	
+</script>
+
+<script type="text/x-jquery-tmpl" id="word-template" >
+	<td>#${model.get("number")}</td>
+	<td>
+		<input name="word" value="${model.get('word')}" type="text" />
+	</td>
+	<td>
+		<button name="delete-button">{% trans "Delete" %}</button>
+	</td>>
+</script>
+
 <script type="text/x-jquery-tmpl" id="task-elem-template" >
 	<td>
 		<a href="#task/${model.cid}">${model.get("name")}</a>
@@ -99,7 +151,7 @@
 		<input name="value" value="${model.get('value')}" type="text" />
 	</td>
 	<td>
-		<button name="delete-button"">{% trans "Delete" %}</button>
+		<button name="delete-button">{% trans "Delete" %}</button>
 	</td>>
 </script>
 

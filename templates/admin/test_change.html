@@ -1,7 +1,8 @@
 {% extends "admin/change_form.html" %}
 {% load i18n %}
 {% block after_related_objects %}
-<a href="{% url admin:testsys_test_edit object_id %}">{% trans "Edit test" %}</a>
+
 {% if change %}{% if not is_popup %}
+<a href="{% url admin:testsys_test_edit object_id %}">{% trans "Edit test" %}</a>
 {% endif %}{% endif %}
 {% endblock %}

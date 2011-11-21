@@ -4,12 +4,15 @@
 function gettext(text){
     if( text == "Choice task")
         return "Выбор из пунктов";
+    if( text == "Word task")
+        return "Поиск слов";    
     return text;
 }
 
 TaskType = {
 	Undef: 0,
     CHOICE: 1,
+    WORD: 2,
 }
 
 var app = "#app";
@@ -49,11 +52,19 @@ Choice = RefModel.extend({
     }
 });
 
-
+Word = Backbone.Model.extend({
+    defaults: {
+        word: "",
+    }
+});
 
 Choices = RefCollection.extend({
 	model: Choice,
 	
+});
+
+Words = Backbone.Collection.extend({
+	model: Word,
 });
 
 
@@ -61,9 +72,26 @@ Task = RefModel.extend({
     defaults:{
         name: "",
         description: "",
+        time: "",
         type: TaskType.Undef,
     },
     
+});
+
+WordTask = Task.extend({
+	url: function(){
+		return "/task/"+this.cid;
+	},
+	defaults:{
+		type: TaskType.WORD,
+		mutilple: false,
+		time: "",
+		text: "",
+	},
+	refCollection:{
+		field: "words",
+		collection: Words
+	}
 });
 
 ChoiceTask = Task.extend({
@@ -72,6 +100,8 @@ ChoiceTask = Task.extend({
 	},
 	defaults:{
 		type: TaskType.CHOICE,
+		mutilple: false,
+		time: ""
 	},
 	refCollection:{
 		field: "choices",
@@ -101,10 +131,39 @@ Test = RefModel.extend({
 	url: "",
 	defaults: {
 		name: "",
-		description: ""
+		description: "",
 	}
 });
 	
+WordView = Backbone.View.extend({
+    initialize: function() {
+		this.template = $('#word-template').template();
+		this.model.bind('destroy', this.remove, this);
+    },  
+    tagName: "tr",
+    className: "word test-editor",
+    events: {
+		"change [name=word]": "changeWord",
+		"click [name=delete-button]": "destroy"
+    	//"click [name=choice-title]": "toggleChoice",
+    },
+    render: function(){
+        $(this.el).empty();
+        $.tmpl( this.template, { model: this.model } ).appendTo( $(this.el) );
+
+        return this;
+    },
+	changeWord: function(){
+		var text = this.$("[name=word]").val();
+		this.model.set({ word: text });
+	},
+	destroy: function(){
+		this.model.destroy();
+    	return false;
+	}
+
+});
+
 ChoiceView = Backbone.View.extend({
     initialize: function() {
 		this.template = $('#choice-template').template();
@@ -116,7 +175,7 @@ ChoiceView = Backbone.View.extend({
     	"change select[name=scale]": "changeScale",
 		"change [name=text]": "changeText",
 		"change [name=value]": "changeValue",
-		"click [name=delete-button]": "delete"
+		"click [name=delete-button]": "destroy"
     	//"click [name=choice-title]": "toggleChoice",
     },
     render: function(){
@@ -125,7 +184,7 @@ ChoiceView = Backbone.View.extend({
         $.tmpl( this.template, { model: this.model, scales: scales } ).appendTo( $(this.el) );
         var self = this;
 		var t = $.template("<option value='${id}' ${selected}>${name}</option>" );
-		self.$("select[name=scale]").append($.tmpl( t, { name: "", selected: "", id: "-1" }));
+		//self.$("select[name=scale]").append($.tmpl( t, { name: "", selected: "", id: "-1" }));
 		scales.each( function( scale ){
         	var name = scale.get("name");
 			var id = scale.get("id");
@@ -147,7 +206,7 @@ ChoiceView = Backbone.View.extend({
 		var value = this.$("[name=value]").val();
 		this.model.set({ value: value });
 	},
-	delete: function(){
+	destroy: function(){
 		this.model.destroy();
     	return false;
 	}
@@ -156,7 +215,77 @@ ChoiceView = Backbone.View.extend({
     //}
 });
 
-
+WordTaskView = Backbone.View.extend({
+    initialize: function() {
+		this.template = $('#word-task-template').template();
+		this.modelEdit = refClone( this.model, WordTask );
+		this.modelEdit.words.bind('remove', this.reAddAll, this);
+    },  
+	events: {
+		"click button[name=add-button]": "addWord",
+		"click button[name=cancel-button]": "cancel",
+		"click button[name=save-button]": "save",
+		"change [name=name]": "changeName",
+		"change [name=time]": "changeTime",
+		"change [name=text]": "changeText",
+	},
+    render: function(){
+        $(app).empty();
+        $(this.el).empty();
+        $.tmpl( this.template, { model: this.modelEdit } ).appendTo( $(this.el) );
+        this.addAll( this.modelEdit.words );
+        $(this.el).appendTo(app);
+        this.makeRichEditor();
+        return this;
+    },
+    makeRichEditor: function(){
+        this.$(".rich").redactor({django_csrf: csrfTocken});
+    },
+    addAll: function(words){
+        var that = this;
+        words.each( function( word ){
+            that.add( word );
+        });
+        
+    },
+    reAddAll: function(){
+    	this.$(".word").remove();
+    	this.addAll( this.modelEdit.words );
+    },
+    add: function( word ){
+		var count = this.$(".word").length + 1;
+		word.set({number: count});
+        var view = new WordView({ model:word });
+        this.$("[name=words-table]").append( view.render().el ); 
+    },
+	addWord: function(){
+		var word = new Word();
+		this.modelEdit.words.add( word );
+		this.add( word );
+	},
+	save: function(){
+		var value = this.$("[name=description]").val();
+		this.modelEdit.set({ description: value });
+		
+		refCopy( this.modelEdit, this.model );
+		testRouter.navigate("", true );
+	},
+	cancel: function(){
+		testRouter.navigate("", true );
+	},
+	changeName: function(){
+		var value = this.$("[name=name]").val();
+		this.modelEdit.set({ name: value });
+	},
+	changeTime: function(){
+		var value = this.$("[name=time]").val();
+		this.modelEdit.set({ time: value });
+	},
+	changeText: function(){
+		var value = this.$("[name=text]").val();
+		this.modelEdit.set({ text: value });
+	}
+});
 
 ChoiceTaskView = Backbone.View.extend({
     initialize: function() {
@@ -169,6 +298,7 @@ ChoiceTaskView = Backbone.View.extend({
 		"click button[name=cancel-button]": "cancel",
 		"click button[name=save-button]": "save",
 		"change [name=name]": "changeName",
+		"change [name=time]": "changeTime",
 		"change [name=description]": "changeDescription",
 	},
     render: function(){
@@ -206,6 +336,8 @@ ChoiceTaskView = Backbone.View.extend({
 		this.add( choice );
 	},
 	save: function(){
+		var value = this.$("[name=description]").val();
+		this.modelEdit.set({ description: value });
 		refCopy( this.modelEdit, this.model );
 		testRouter.navigate("", true );
 	},
@@ -214,11 +346,14 @@ ChoiceTaskView = Backbone.View.extend({
 	},
 	changeName: function(){
 		var value = this.$("[name=name]").val();
-		this.model.set({ name: value });
+		this.modelEdit.set({ name: value });
+	},
+	changeTime: function(){
+		var value = this.$("[name=time]").val();
+		this.modelEdit.set({ time: value });
 	},
 	changeDescription: function(){
-		var value = this.$("[name=description]").val();
-		this.model.set({ description: value });
+		return;
 	}
 });
 
@@ -294,8 +429,12 @@ TaskByType[TaskType.CHOICE] = {
 	name: gettext("Choice task"),
 	model: ChoiceTask,
 	view: ChoiceTaskView
-}
-
+};
+TaskByType[TaskType.WORD] = {
+	name: gettext("Word task"),
+	model: WordTask,
+	view: WordTaskView
+};
 
 NewTaskView = Backbone.View.extend({
     initialize: function() {
@@ -303,7 +442,7 @@ NewTaskView = Backbone.View.extend({
         this.render();
     },  
     events: {
-		"click [name=continue-button]" : "continue",
+		"click [name=continue-button]" : "next",
 		"click [name=cancel-button]" : "cancel",	
     },
     render: function(){
@@ -313,11 +452,12 @@ NewTaskView = Backbone.View.extend({
         this.addTaskTypes();
         $(this.el).appendTo($(app));
     },
-    continue: function(){
+    next: function(){
     	var info = TaskByType[this.$("select[name=task-type] option:selected").val()];
     	var task = new info.model();
     	var name = this.$("[name=task-name]").val();
     	task.set({name: name});
+		task.set({description: "" });
     	test.tasks.add( task );
     	testRouter.navigate("task/"+task.cid, true );
     	//this.$("select[name=scale] option:selected").text()

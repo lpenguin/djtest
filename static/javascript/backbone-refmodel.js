@@ -54,6 +54,7 @@ RefModel = Backbone.Model.extend({
 	modelGenerator: null,
 	collectionGenerator:  null,
 	loadJSON: function( data ){
+		this.set( data );
 		var self = this;
 		if( this.refModel ){
 			var fieldName = this.refModel.field;
