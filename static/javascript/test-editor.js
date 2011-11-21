@@ -125,7 +125,7 @@ ChoiceView = Backbone.View.extend({
         $.tmpl( this.template, { model: this.model, scales: scales } ).appendTo( $(this.el) );
         var self = this;
 		var t = $.template("<option value='${id}' ${selected}>${name}</option>" );
-		self.$("select[name=scale]").append($.tmpl( t, { name: "", selected: "", id: "-1" }));
+		//self.$("select[name=scale]").append($.tmpl( t, { name: "", selected: "", id: "-1" }));
 		scales.each( function( scale ){
         	var name = scale.get("name");
 			var id = scale.get("id");
@@ -206,6 +206,8 @@ ChoiceTaskView = Backbone.View.extend({
 		this.add( choice );
 	},
 	save: function(){
+		var value = this.$("[name=description]").val();
+		this.modelEdit.set({ description: value });
 		refCopy( this.modelEdit, this.model );
 		testRouter.navigate("", true );
 	},
@@ -214,11 +216,10 @@ ChoiceTaskView = Backbone.View.extend({
 	},
 	changeName: function(){
 		var value = this.$("[name=name]").val();
-		this.model.set({ name: value });
+		this.modelEdit.set({ name: value });
 	},
 	changeDescription: function(){
-		var value = this.$("[name=description]").val();
-		this.model.set({ description: value });
+		return;
 	}
 });
 
@@ -318,6 +319,7 @@ NewTaskView = Backbone.View.extend({
     	var task = new info.model();
     	var name = this.$("[name=task-name]").val();
     	task.set({name: name});
+		task.set({description: "" });
     	test.tasks.add( task );
     	testRouter.navigate("task/"+task.cid, true );
     	//this.$("select[name=scale] option:selected").text()

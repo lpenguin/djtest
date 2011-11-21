@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext as _
+from django.db.models import Max
 
 class Property(models.Model):
     name = models.CharField( max_length = 30, verbose_name = _('Name') )
@@ -16,6 +17,19 @@ class Test(models.Model):
     description = models.TextField( blank = True, verbose_name = _('Description') )
     property = models.ForeignKey( Property, verbose_name = _('Property') )
     data = models.TextField( blank = True, verbose_name = _('Data') )   
+    order = models.IntegerField( blank = True, verbose_name = _("Order") )
+#    scale = models.ManyToManyField( 'Scale' )
+    
+    def save(self):
+        if not self.id:
+            args = Test.objects.all()
+            if args:
+                res = args.aggregate(max_order = Max('order'))
+                self.order = res["max_order"] + 1
+            else:
+                self.order = 0
+                
+        super(Test, self).save()
 
     def __unicode__(self):
         return self.name

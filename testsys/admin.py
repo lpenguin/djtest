@@ -19,7 +19,8 @@ class ScaleInline(admin.StackedInline):
 class TestAdmin(admin.ModelAdmin):
 	#inlines = [ScaleInline]
 	change_form_template = 'admin/test_change.html'
-	fields = ["name", "description", "property", ]
+	fields = ["name", "description", "property", "order"]
+	ordering = ("order", )
 	def get_urls(self):
 		urls = super(TestAdmin, self).get_urls()
 		my_urls = patterns('',
