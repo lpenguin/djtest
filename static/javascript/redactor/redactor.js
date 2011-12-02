@@ -91,7 +91,7 @@ function detectWebkit()
 			remove_classes: false,
 			remove_styles: true,
 			convert_links: true,	
-			autoformat: true,
+			autoformat: false,
 			init_clear: false,					
 			overlay: true, // modal overlay
 			path: '',
@@ -349,11 +349,11 @@ function detectWebkit()
 	   		
 	   		if (html == '')
 	   		{
-	   			if (this.opts.autoformat === true) 
-	   			{
-	   				if ($.browser.msie) html = "<p></p>";
-		   			else html = "<p>&nbsp;</p>";
-		   		}
+	   			//if (this.opts.autoformat === true) 
+	   			//{
+	   			//	if ($.browser.msie) html = "<p></p>";
+		   		//	else html = "<p>&nbsp;</p>";
+		   		//}
 	   		}
 	   		
 			this.redactorWrite(this.getRedactorDoc(html));
@@ -684,8 +684,8 @@ function detectWebkit()
 		*/
 		paragraphise: function()
 		{
-
-			if (this.opts.autoformat === false) return true;
+			
+			//if (this.opts.autoformat === false) return true;
 			if (this.opts.visual)
 			{
 				var theBody = this.doc.body;

@@ -9,13 +9,19 @@
 <script type="text/javascript" src="/static/javascript/jquery.tmpl.js"></script>
 <script type="text/javascript" src="/static/javascript/json2.js"></script>
 <script type="text/javascript" src="/static/javascript/backbone-refmodel.js"></script>
+<script type="text/javascript" src='/static/javascript/models.js'></script>
 <script type="text/javascript" src="/static/javascript/test-editor.js"></script>
+<script type="text/javascript" src="/static/javascript/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="/static/javascript/tiny_mce/jquery.tinymce.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/css/test-editor.css" />
 
-<!-- redactor -->
-<script type="text/javascript" src="/static/javascript/redactor/redactor.js"></script>
-<link rel="stylesheet" href="/static/javascript/redactor/css/redactor.css" type="text/css" />
 
+
+
+
+<!-- redactor -->
+<!-- <script type="text/javascript" src="/static/javascript/redactor/redactor.js"></script> -->
+<!-- <link rel="stylesheet" href="/static/javascript/redactor/css/redactor.css" type="text/css" /> -->
 <script type="text/javascript">
 	$(document).ready(function($) {		
 		testChangeUrl = "{% url admin:testsys_test_change object_id %}";
@@ -50,8 +56,6 @@
 		<h4>{% trans "Data" %}</h4>
 		<label for="name">{% trans "Name" %}</label> <br/>
 		<input type="text" name="name" value="${model.get('name')}" /> <br/>
-		<label for="time">{% trans "Time" %}</label> <br/>
-		<input type="text" name="time" value="${model.get('time')}" /> <br/>	
 		
 		<label for="description">{% trans "Description" %}</label> </br>
 		<textarea name="description" class="rich">${model.get('description')}</textarea>
@@ -70,7 +74,7 @@
 			<tfoot>
 				<tr >
 					<td colspan=5>
-						<button name="save-button">{% trans "Save" %}</button> 
+						<button name="save-button">{% trans "Done" %}</button> 
 						<button name="cancel-button" >{% trans "Cancel" %}</button>
 						<button name="add-button">{% trans "Add choice" %}</button>
 					</td>
@@ -89,17 +93,19 @@
 		<h4>{% trans "Data" %}</h4>
 		<label for="name">{% trans "Name" %}</label> <br/>
 		<input type="text" name="name" value="${model.get('name')}" /> <br/>
-		<label for="time">{% trans "Time" %}</label> <br/>
-		<input type="text" name="time" value="${model.get('time')}" /> <br/>	
 		
 		<label for="description">{% trans "Description" %}</label> </br>
 		<textarea name="description" class="rich">${model.get('description')}</textarea>
 
 	</div>
 	<div name="data">
+		<h4>{% trans "Scale" %}</h4> 
+		<select name="scale" /> 
 		<h4>{% trans "Text" %}</h4>
 		<!--<label for="text">{% trans "Text" %}</label> </br>-->
-		<textarea name="text">${model.get('text')}</textarea>
+		<textarea name="text">${model.get('text')}</textarea> <br/>
+
+		
 		<table name="words-table">
 		<thead>
 			<th>{% trans "Num" %}</th>
@@ -109,7 +115,7 @@
 			<tfoot>
 				<tr >
 					<td colspan=5>
-						<button name="save-button">{% trans "Save" %}</button> 
+						<button name="save-button">{% trans "Done" %}</button> 
 						<button name="cancel-button" >{% trans "Cancel" %}</button>
 						<button name="add-button">{% trans "Add word" %}</button>
 					</td>
@@ -137,6 +143,7 @@
 		<a href="#task/${model.cid}">${model.get("name")}</a>
 	</td>
 	<td class="last">
+		<button name="copy-button">{% trans "Copy" %}</button>
 		<button name="delete-button">{% trans "Delete" %}</button>
 	</td>
 </script>
@@ -151,8 +158,8 @@
 		<input name="value" value="${model.get('value')}" type="text" />
 	</td>
 	<td>
-		<button name="delete-button">{% trans "Delete" %}</button>
-	</td>>
+		<button name="delete-button">{% trans "Delete" %}</button>		
+	</td>
 </script>
 
 <script type="text/x-jquery-tmpl" id="test-template" >
@@ -160,12 +167,14 @@
 	{% csrf_token %}
 	<input type='hidden' name='data'>
     <h3>{% trans "Test editing" %}</h3>
-	{{ test.name }}
+	{{ test.name }}<br />
+	<!--<label for="time">{% trans "Time" %}</label> <br/>
+	<input type="text" name="time" value="${model.get('time')}" /> <br/> -->	
+	
 	<h4>{% trans "Tasks" %}</h4>
 	<table name="tasks-table" class="tasks-table">
 		<thead>
-			<th>{% trans "Name" %}</th>
-			<th>{% trans "Action" %}</th>
+			<th>{% trans "Name" %}</th><th class="last">{% trans "Action" %}</th>
 		</thead>
 		<tfoot>
 			<tr>

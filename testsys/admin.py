@@ -1,5 +1,5 @@
 from django.contrib import admin
-from djtest.testsys.models import Property, Test, Scale
+from djtest.testsys.models import Property, Test, Scale, TestResult
 from djtest.testsys import admin_views
 from django.conf.urls.defaults import patterns, url
 #from djtest.testsys import admin_forms
@@ -12,14 +12,14 @@ class PropertyAdmin(admin.ModelAdmin):
 	#inlines = [TestInline]
 	pass
 
-class ScaleInline(admin.StackedInline):
+class ScaleInline(admin.TabularInline):
 	model = Scale
 	extra = 0
 
 class TestAdmin(admin.ModelAdmin):
-	#inlines = [ScaleInline]
+	inlines = [ScaleInline]
 	change_form_template = 'admin/test_change.html'
-	fields = ["name", "description", "property", "order"]
+	fields = ["name", "description", "instruction", "property", "time", "order"]
 	ordering = ("order", )
 	def get_urls(self):
 		urls = super(TestAdmin, self).get_urls()
@@ -43,3 +43,4 @@ class TestAdmin(admin.ModelAdmin):
 admin.site.register(Property, PropertyAdmin)
 admin.site.register(Test, TestAdmin)
 admin.site.register(Scale)
+admin.site.register(TestResult)

@@ -1,0 +1,32 @@
+{% load i18n %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+    <title>
+    	{% block title %}
+    	Test system
+    	{% endblock %}
+    </title>
+    {% block extrahead %}
+	{% endblock %}
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+</head>
+<body>
+	{% block header %}
+	<div id="header" >
+		{% if user.is_authenticated %}
+  			<p>{% trans "Welcome, " %}{{ user.username }}. <a href="/logout">{% trans "Log out" %}</a></p>
+  		{% else %}
+  			<p>{% trans "Welcome, new user." %} <a href="/login">{% trans "Log in" %}</a></p>
+		{% endif %}
+		{% block extra_header %}
+		{% endblock %}
+	</div>
+	{% endblock %}
+	<div id="content">
+	{% block content %}
+	{% endblock %}		
+	</div>
+
+</body>
+</html>

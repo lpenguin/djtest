@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load coffeescript %}
+
+{% block extrahead %}
+<script type="text/javascript" src="/static/javascript/jquery.js"></script>
+<script type="text/javascript" src="/static/javascript/underscore.js"></script>
+<script type="text/javascript" src="/static/javascript/backbone.js"></script>
+<script type="text/javascript" src="/static/javascript/jquery.tmpl.js"></script>
+<script type="text/javascript" src="/static/javascript/jquery-fieldselection.js"></script>
+<script type="text/javascript" src="/static/javascript/json2.js"></script>
+<script type="text/javascript" src="/static/javascript/date.format.js"></script>
+<script type="text/javascript" src="/static/javascript/backbone-refmodel.js"></script>
+<script type="text/javascript" src='/static/{% coffeescript "coffeescript/models.coffee" %}'></script>
+<script type="text/javascript" src='/static/{% coffeescript "coffeescript/test-player.coffee" %}'></script>
+<!--<link rel="stylesheet" type="text/css" href="/static/css/test-editor.css" />-->
+
+<script type="text/javascript" >
+	$(document).ready(function($) {
+		var testData = {% if test.data %} {{test.data|safe}} {%else%} {} {% endif %};
+		scales = new Scales([
+		{% for scale in scales %}
+			new Scale({ 
+				name: "{{scale.name}}", 
+				description: "{{scale.description}}",
+				id: {{scale.id}}
+			}),
+		{% endfor %}
+		]);
+		test = new Test( testData );
+		testid = {{testid}}
+		window.activeTask = test.tasks.first();
+		window.activeTaskIndex = 0;
+		Backbone.history.start();
+	});
+	
+	function d(o){
+		console.log(o);
+	}
+</script>
+{% endblock %}
+		{% block extra_header %}
+		<div id="timer" class="left">
+			
+		</div>
+		{% endblock %}
+		
+{% block content %}
+<div id="app" ></div>
+
+<script type="text/x-jquery-tmpl" id="timer-template" >
+Time elapsed: <span id="time"></span>
+</script> 
+
+<script type="text/x-jquery-tmpl" id="send-template" >
+		{% trans "Sending results" %}...
+		<form action="/test" method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="data" />
+		<input type="hidden" name="testid" value="{{testid}}"/>
+</script>
+
+<script type="text/x-jquery-tmpl" id="test-template" >
+	<h1>{{test.name}}</h1>
+	<ul>
+	<% test.tasks.each(function( task, index){%>
+		<li>
+			<% if(task.cid == activeTask.cid) { %>v<% } %> <a href="#tasks/<%=task.cid%>"><%=task.get("name")%>
+				
+			</a>
+		</li>
+	<% }); %>		
+	</ul>
+</script>
+
+<script type="text/x-jquery-tmpl" id="choice-task-template" >
+	<%=task.get("description")%>
+	<ul name="choices-ul">	
+	</ul>
+</script>
+
+<script type="text/x-jquery-tmpl" id="word-task-template" >
+	<%=task.get("description")%>
+	<textarea name="text" class="words"><%=task.get("text") %></textarea> <br />
+	<button name="add-button">{% trans "Add" %}</button>
+	<h2>{% trans "Finded words" %}</h2>
+	
+	<table name="words-ul" class="words">	
+	</table>
+	<button name="done-button">{% trans "Done" %}</button>
+</script>
+
+<script type="text/x-jquery-tmpl" id="word-template" >
+	<td><i><%=word.get("word")%></i></td><td> <a name="delete-button" href="#">{% trans "Delete" %}</a></td>
+</script>
+
+<script type="text/x-jquery-tmpl" id="choice-template" >
+	<a href="#"><%=choice.get("text")%></a>
+</script>
+{% endblock %}

@@ -1,4 +1,4 @@
 .pydevproject
 .project
 *.pyc
-testsys/*.pyc
+testsys/*.pycstatic/coffeescript-cache/

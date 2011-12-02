@@ -11,7 +11,10 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Example:
     # (r'^djtest/', include('djtest.foo.urls')),
-
+    (r'^login/*$', views.login),
+    (r'^logout/*$', views.logout),
+    (r'^test/*$', views.all_tests),
+    (r'^test/(?P<testid>\w+)$', views.test_player),
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     #(r'^admin/testsys/test-edit/(?P<testId>.*)/$', 'testsys.admin_views.edit_test'),
