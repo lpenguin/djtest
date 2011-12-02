@@ -155,7 +155,7 @@ WordTaskView = Backbone.View.extend({
         return this;
     },
     makeRichEditor: function(){
-        this.$(".rich").tinymce( richEditorSettings );
+        this.$(".rich").redaktor({django_csrf: csrfTocken});//tinymce( richEditorSettings );
     },
     addAll: function(words){
         var that = this;
@@ -232,8 +232,8 @@ ChoiceTaskView = Backbone.View.extend({
         return this;
     },
     makeRichEditor: function(){
-    	  this.$(".rich").tinymce( richEditorSettings );
-        //this.$(".rich").redactor({django_csrf: csrfTocken});
+        //this.$(".rich").tinymce( richEditorSettings );
+        this.$(".rich").redactor({django_csrf: csrfTocken});
     },
     addAll: function(choices){
         var that = this;
