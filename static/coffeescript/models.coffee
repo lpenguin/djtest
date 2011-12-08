@@ -38,9 +38,14 @@ class window.Choice extends RefModel
   refModel:
     field: "scale"
     model: Scale
+  refCollection:
+    field: "scales"
+    collection: Scales
+    
   initialize: ->
     this.set id: @cid
-    super
+    super    
+    #@scales.add @scale if not @scale.id
   url: ""
   
   modelGenerator: ( data ) ->

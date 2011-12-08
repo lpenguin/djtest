@@ -53,9 +53,10 @@ RefModel = Backbone.Model.extend({
 		collection: null
 	}*/
 	modelGenerator: null,
-	collectionGenerator:  null,
+	//collectionGenerator:  null,
 	loadJSON: function( data ){
 		this.set( data );
+
 		var self = this;
 		if( this.refModel ){
 			var fieldName = this.refModel.field;
@@ -73,7 +74,7 @@ RefModel = Backbone.Model.extend({
 			var fieldName = this.refCollection.field;
 			if( _.isUndefined( data[ fieldName ] ) )
 				data[ fieldName ] = [];
-			var generator = this.modelGenerator ? 
+			var generator = this.collectionGenerator ? 
 								this.collectionGenerator : 
 								function( data ){ 
 									return new self.refCollection.collection( data )

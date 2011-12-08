@@ -42,3 +42,11 @@ textarea[name=text]{
 input[name=name]{
     width: 400px;
 }
+
+.scale-value {
+	height: 20px
+}
+
+.scale-name {
+	height: 20px
+}

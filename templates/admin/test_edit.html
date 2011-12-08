@@ -1,5 +1,6 @@
 {% extends "admin/base_site.html" %}
 {% load i18n %}
+{% load coffeescript %}
 {% block title %}{% trans "Test editing" %}{% endblock %}
 
 {% block extrahead %}
@@ -9,13 +10,12 @@
 <script type="text/javascript" src="/static/javascript/jquery.tmpl.js"></script>
 <script type="text/javascript" src="/static/javascript/json2.js"></script>
 <script type="text/javascript" src="/static/javascript/backbone-refmodel.js"></script>
-<script type="text/javascript" src='/static/javascript/models.js'></script>
+<!--<script type="text/javascript" src='/static/javascript/models.js'></script>-->
+<script type="text/javascript" src='/static/{% coffeescript "coffeescript/models.coffee" %}'></script>
 <script type="text/javascript" src="/static/javascript/test-editor.js"></script>
 <!-- <script type="text/javascript" src="/static/javascript/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript" src="/static/javascript/tiny_mce/jquery.tinymce.js"></script> -->
 <link rel="stylesheet" type="text/css" href="/static/css/test-editor.css" />
-
-
 
 
 
@@ -155,9 +155,13 @@
 	<td>
 		<input name="text" value="${model.get('text')}" type="text" />
 	</td>
-	<td><select name="scale" /></td>
 	<td>
-		<input name="value" value="${model.get('value')}" type="text" />
+		<!--<select name="scale" /></select>-->
+		<div class="add-scale-name"><a href="#" class="add-scale">{% trans "Add" %}</a></div>
+	</td>
+	<td>
+		<!--<input name="value" value="${model.get('value')}" type="text" />-->
+		<div class="add-scale-value" />
 	</td>
 	<td>
 		<button name="delete-button">{% trans "Delete" %}</button>		

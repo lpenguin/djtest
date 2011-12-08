@@ -81,7 +81,8 @@ ChoiceView = Backbone.View.extend({
     	"change select[name=scale]": "changeScale",
 		"change [name=text]": "changeText",
 		"change [name=value]": "changeValue",
-		"click [name=delete-button]": "destroy"
+		"click [name=delete-button]": "destroy",
+		"click .add-scale": "addScale"
     	//"click [name=choice-title]": "toggleChoice",
     },
     render: function(){
@@ -89,14 +90,14 @@ ChoiceView = Backbone.View.extend({
         $(this.el).empty();
         $.tmpl( this.template, { model: this.model, scales: scales } ).appendTo( $(this.el) );
         var self = this;
-		var t = $.template("<option value='${id}' ${selected}>${name}</option>" );
+		//this.fillSelect( self.$("select[name=scale]"), t);
 		//self.$("select[name=scale]").append($.tmpl( t, { name: "", selected: "", id: "-1" }));
-		scales.each( function( scale ){
-        	var name = scale.get("name");
-			var id = scale.get("id");
-	        var selected = self.model.scale == scale ? "selected" : "";
-	        self.$("select[name=scale]").append($.tmpl( t, { name: name, selected: selected, id: id }));
-        })
+		// scales.each( function( scale ){
+        	// var name = scale.get("name");
+			// var id = scale.get("id");
+	        // var selected = self.model.scale == scale ? "selected" : "";
+	        // self.$("select[name=scale]").append($.tmpl( t, { name: name, selected: selected, id: id }));
+        // })
         return this;
     },
     changeScale: function(){
@@ -115,6 +116,32 @@ ChoiceView = Backbone.View.extend({
 	destroy: function(){
 		this.model.destroy();
     	return false;
+	},
+	fillSelect: function(select, choiceScale){
+		var t = $.template("<option value='${id}' ${selected}>${name}</option>" );
+		var self = this;
+		scales.each( function( scale ){
+        	var name = scale.get("name");
+			var id = scale.get("id");
+	        var selected = choiceScale == scale ? "selected" : "";
+	        select.append($.tmpl( t, { name: name, selected: selected, id: id }));
+       });
+	},
+	addScale: function(scale, value){
+		if( !scale )
+			scale = scale.first;
+		if( value == undefined )
+			value = "0";
+			
+		var div = $("<div class='scale-name'/> ");
+		var select = $(" <select/>");
+		div.append( select );
+		this.$("div.add-scale-name").before(div).before("<br />");
+		//this.$("div.add-scale-name").before("<br />");
+		this.fillSelect( select, scale);
+		this.$("div.add-scale-value").before(
+			"<div class='scale-value'><input name='value' value='"+value+"' type='text' /></div>").before("<br />");
+		return false;
 	}
     //toggleChoice: function(e){
     //	this.$("[name=choice-body]").toggleClass("hidden");
