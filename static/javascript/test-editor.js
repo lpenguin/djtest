@@ -12,8 +12,8 @@ function gettext(text){
 TaskType = {
 	Undef: 0,
     CHOICE: 1,
-    WORD: 2,
-}
+    WORD: 2
+};
 
 var app = "#app";
 var dialog = "#dialog";
@@ -132,7 +132,7 @@ WordTaskView = Backbone.View.extend({
 		"change [name=name]": "changeName",
 		"change [name=time]": "changeTime",
 		"change [name=text]": "changeText",
-		"change select[name=scale]": "changeScale",
+		"change select[name=scale]": "changeScale"
 	},
     render: function(){
         $(app).empty();
@@ -205,7 +205,7 @@ WordTaskView = Backbone.View.extend({
     	this.modelEdit.scale = scales.findByName(
     		this.$("select[name=scale] option:selected").text()
     	);
-    },
+    }
 });
 
 ChoiceTaskView = Backbone.View.extend({
@@ -220,7 +220,7 @@ ChoiceTaskView = Backbone.View.extend({
 		"click button[name=save-button]": "save",
 		"change [name=name]": "changeName",
 		"change [name=time]": "changeTime",
-		"change [name=description]": "changeDescription",
+		"change [name=description]": "changeDescription"
 	},
     render: function(){
         $(app).empty();
@@ -313,7 +313,7 @@ TestView = Backbone.View.extend({
     events: {
 		"click [name=add-button]" : "addTask",	
 		"click [name=save-button]" : "save",
-		"click [name=cancel-button]" : "cancel",
+		"click [name=cancel-button]" : "cancel"
     },
     render: function(){
         $(app).empty();
@@ -392,7 +392,7 @@ NewTaskView = Backbone.View.extend({
     },  
     events: {
 		"click [name=continue-button]" : "next",
-		"click [name=cancel-button]" : "cancel",	
+		"click [name=cancel-button]" : "cancel"	
     },
     render: function(){
         $(app).empty();
@@ -420,14 +420,14 @@ NewTaskView = Backbone.View.extend({
     },
     cancel: function(){
 		testRouter.navigate("", true );
-	},
+	}
 });
 
 TestRouter = Backbone.Router.extend({
 	routes: {
 		"": "testView",
 		"task/:taskId" : "taskEdit",
-		"task-new": "taskNew", 
+		"task-new": "taskNew"
 	},
 	testView: function(){
 		var view = new TestView( { model: test } );
