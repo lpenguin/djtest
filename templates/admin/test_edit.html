@@ -37,6 +37,8 @@
 		{% endfor %}
 		
 		]);
+		if( !scales.length )
+			alert(gettext("No scales")+"!");
 		test = new Test( testData );
 		Backbone.history.start();
 		//var view = new TestView({model: new Test( testData ) });

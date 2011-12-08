@@ -6,6 +6,8 @@ function gettext(text){
         return "Выбор из пунктов";
     if( text == "Word task")
         return "Поиск слов";    
+    if( text == "No scales")
+        return "Вы не добавили шкалы";    
     return text;
 }
 
