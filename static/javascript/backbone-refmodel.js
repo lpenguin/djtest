@@ -67,7 +67,7 @@ RefModel = Backbone.Model.extend({
 								function( data ){ 
 									return new self.refModel.model( data )
 								};
-			this[ fieldName ] = generator( data[ fieldName ] );
+			this[ fieldName ] = generator.call(this, data[ fieldName ] );
 			this.unset( fieldName );
 		}
 		if( this.refCollection ){
@@ -80,7 +80,7 @@ RefModel = Backbone.Model.extend({
 									return new self.refCollection.collection( data )
 								};
 			
-			this[ fieldName ] = generator( data[ fieldName ] );
+			this[ fieldName ] = generator.call(this, data[ fieldName ] );
 			this.unset( fieldName );
 		}
 	},

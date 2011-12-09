@@ -27,12 +27,13 @@
 		testChangeUrl = "{% url admin:testsys_test_change object_id %}";
 
 		csrfTocken = "{% csrf_token %}";
-		var testData = {% if test.data %} {{test.data|safe}} {%else%} {} {% endif %};
+		window.testData = {% if test.data %} {{test.data|safe}} {%else%} {} {% endif %};
 		scales = new Scales([
 		{% for scale in scales %}
 			new Scale({ 
 				name: "{{scale.name}}", 
-				description: "{{scale.description}}"
+				description: "{{scale.description}}",
+				id: {{scale.id}}
 			}),
 		{% endfor %}
 		

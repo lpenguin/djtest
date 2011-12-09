@@ -2,3 +2,6 @@
 .project
 *.pyc
 testsys/*.pycstatic/coffeescript-cache/
+main.db
+static/coffeescript-cache/
+static/coffeescript-cache/coffeescript
