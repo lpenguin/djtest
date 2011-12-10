@@ -81,7 +81,8 @@ ChoiceView = Backbone.View.extend({
     	"change select[name=scale]": "changeScale",
 		"change [name=text]": "changeText",
 		"change [name=value]": "changeValue",
-		"click [name=delete-button]": "destroy"
+		"click [name=delete-button]": "destroy",
+		"click .add-scale": "addScaleClick"
     	//"click [name=choice-title]": "toggleChoice",
     },
     render: function(){
@@ -89,32 +90,79 @@ ChoiceView = Backbone.View.extend({
         $(this.el).empty();
         $.tmpl( this.template, { model: this.model, scales: scales } ).appendTo( $(this.el) );
         var self = this;
-		var t = $.template("<option value='${id}' ${selected}>${name}</option>" );
+        this.model.scales.each( function(scale) {
+        	self.addScale( scale );
+        });
+		//this.fillSelect( self.$("select[name=scale]"), t);
 		//self.$("select[name=scale]").append($.tmpl( t, { name: "", selected: "", id: "-1" }));
-		scales.each( function( scale ){
-        	var name = scale.get("name");
-			var id = scale.get("id");
-	        var selected = self.model.scale == scale ? "selected" : "";
-	        self.$("select[name=scale]").append($.tmpl( t, { name: name, selected: selected, id: id }));
-        })
+		// scales.each( function( scale ){
+        	// var name = scale.get("name");
+			// var id = scale.get("id");
+	        // var selected = self.model.scale == scale ? "selected" : "";
+	        // self.$("select[name=scale]").append($.tmpl( t, { name: name, selected: selected, id: id }));
+        // })
         return this;
     },
-    changeScale: function(){
-    	this.model.scale = scales.findByName(
-    		this.$("select[name=scale] option:selected").text()
+    changeScale: function(e){
+    	var num = $(e.currentTarget).attr("scalenum");
+    	var value = this.model.scales.models[num].get('value');
+    	var scale = scales.findById(
+    		$(e.currentTarget).val()
     	);
+    	this.model.scales.models[num] = scale.clone();
+    	this.model.scales.models[num].set({value: value});
     },
 	changeText: function(){
 		var text = this.$("[name=text]").val();
 		this.model.set({ text: text });
 	},
-	changeValue: function(){
-		var value = this.$("[name=value]").val();
-		this.model.set({ value: value });
+	changeValue: function(e){
+		var num = $(e.currentTarget).attr("scalenum");
+    	this.model.scales.at(num).set({value: $(e.currentTarget).val()});
+		//var value = this.$("[name=value]").val();
+		//this.model.set({ value: value });
 	},
 	destroy: function(){
 		this.model.destroy();
     	return false;
+	},
+	fillSelect: function(select, choiceScale){
+		var t = $.template("<option value='${id}' ${selected}>${name}</option>" );
+		var self = this;
+		scales.each( function( scale ){
+        	var name = scale.get("name");
+			var id = scale.get("id");
+	        var selected = choiceScale.id == scale.id ? "selected" : "";
+	        select.append($.tmpl( t, { name: name, selected: selected, id: id }));
+       });
+	},
+	addScaleClick: function(e){
+		var scale = scales.first().clone();
+		scale.set({value: "0"});
+		this.model.scales.add( scale );
+		this.addScale(scale);
+		return false;
+	},
+	addScale: function(scale){
+		
+		var value = scale.get('value');
+		var div = $("<div class='scale-name'/> ");
+		var select = $(" <select name='scale' />");
+		
+		var num = this.$("[name=scale]").length;
+		select.attr("scalenum", num );
+		div.append( select );
+		this.$("div.add-scale-name").before(div).before("<br />");
+		//this.$("div.add-scale-name").before("<br />");
+		this.fillSelect( select, scale);
+		
+		
+		var input = $("<input name='value' type='text' />");
+		input.val( value );
+		input.attr("scalenum", num );
+		var div = $("<div class='scale-value'></div>");
+		div.append( input );
+		this.$("div.add-scale-value").before(div).before("<br />");
 	}
     //toggleChoice: function(e){
     //	this.$("[name=choice-body]").toggleClass("hidden");
@@ -255,7 +303,7 @@ ChoiceTaskView = Backbone.View.extend({
         this.$("[name=choices-table]").append( view.render().el ); 
     },
 	addChoice: function(){
-		var choice = new Choice({ scale: scales.at(0).get("name") });
+		var choice = new Choice({ scales: [scales.at(0).toJSON()] });
 		this.modelEdit.choices.add( choice );
 		this.add( choice );
 	},

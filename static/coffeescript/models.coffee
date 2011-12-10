@@ -28,29 +28,56 @@ class window.Scales extends Backbone.Collection
   model: Scale
   findById: (id) ->
     this.find (scale) ->
-      scale.get('id') == id
+      scale.get('id').toString() == id.toString() 
       
   findByName: ( name ) ->
       @find ( scale ) ->
           scale.get("name") == name 
 
 class window.Choice extends RefModel
-  refModel:
-    field: "scale"
-    model: Scale
+  #refModel:
+  #  field: "scale"
+  #  model: Scale
+  refCollection:
+    field: "scales"
+    collection: Scales
+    
   initialize: ->
-    this.set id: @cid
-    super
+    super    
+    scale = this.get 'scale'
+
+    if scale?
+      res = @makeScale scale
+      res.set value: @get 'value'
+      @scales.add res
+      this.unset 'scale'
+      this.unset 'value'
+    
   url: ""
-  
-  modelGenerator: ( data ) ->
+  makeScale: (data) ->
     if not _.isString(data) #data is Scale Object Descriptor
-      return scales.findById(data.id) 
+      if data.id?
+        return scales.findById(data.id)
+      if data.name?
+        return scales.findByName data.name 
     scales.findById(data)
+    
+  # collectionGenerator: ( arr ) ->
+    # scales = new Scales
+    # _(arr).each (data) =>
+      # scales.add @makeScale data
+    # return scales
+  # modelGenerator: ( data ) ->
+    # if not _.isString(data) #data is Scale Object Descriptor
+      # if data.id?
+        # return scales.findById(data.id)
+      # if data.name?
+        # return scales.findByName data.name 
+    # scales.findById(data)
     
   defaults: 
         text: ""
-        value: 0
+        #value: 0
 
 class window.Word extends Backbone.Model
   defaults: 

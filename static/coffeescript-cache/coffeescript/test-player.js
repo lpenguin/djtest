@@ -114,17 +114,12 @@
       return this.template = $('#choice-task-template').html();
     };
     ChoiceTaskView.prototype.render = function() {
-      var timerView;
       $(app).empty();
       $(this.el).html(_.template(this.template, {
         task: this.model
       }));
       $(this.el).appendTo(app);
-      this.addAll(this.model.choices);
-      if (this.model.get('time')) {
-        timerView = new TimerView(this.model.get('time'));
-        return timerView.render();
-      }
+      return this.addAll(this.model.choices);
     };
     ChoiceTaskView.prototype.add = function(choice) {
       var view;
@@ -186,56 +181,10 @@
       return $(this.el).appendTo(app);
     };
     SendResultsView.prototype.sendResults = function() {
-      this.$("[name=data]").val(JSON.stringify(test.getResults()));
+      this.$("[name=data]").val(JSON.stringify(test.makeJSON()));
       return this.$("form").submit();
     };
     return SendResultsView;
-  })();
-  window.TimerView = (function() {
-    __extends(TimerView, Backbone.View);
-    function TimerView() {
-      TimerView.__super__.constructor.apply(this, arguments);
-    }
-    TimerView.prototype.initialize = function(time) {
-      _.extend(this, Backbone.Events);
-      this.template = $('#timer-template').html();
-      return this.seconds = time;
-    };
-    TimerView.prototype.render = function() {
-      $("#timer").empty();
-      $(this.el).html(_.template(this.template, {
-        test: this.model
-      }));
-      $(this.el).appendTo("#timer");
-      return this.startTimer();
-    };
-    TimerView.prototype.startTimer = function() {
-      var f, that;
-      that = this;
-      f = function() {
-        return that.tick();
-      };
-      this.timer = setInterval(f, 1000);
-      return f();
-    };
-    TimerView.prototype.tick = function() {
-      var minutes, seconds;
-      this.seconds--;
-      minutes = Math.floor(this.seconds / 60);
-      seconds = this.seconds % 60;
-      if (seconds.toString().length <= 1) {
-        seconds = '0' + seconds;
-      }
-      if (minutes.toString().length <= 1) {
-        minutes = '0' + minutes;
-      }
-      if (this.seconds <= 0) {
-        this.trigger('end-time');
-        clearInterval(this.timer);
-      }
-      return this.$("#time").html("" + minutes + ":" + seconds);
-    };
-    return TimerView;
   })();
   window.TestRouter = (function() {
     __extends(TestRouter, Backbone.Router);
@@ -271,10 +220,6 @@
     };
     TestRouter.prototype.showTask = function(taskid) {
       var info, task, view;
-      if (activeTask.cid !== taskid) {
-        this.navigate("#tasks/" + activeTask.cid, true);
-        return;
-      }
       task = test.tasks.find(__bind(function(task) {
         return task.cid === taskid;
       }, this));
@@ -285,9 +230,10 @@
       return view.render();
     };
     TestRouter.prototype.nextTask = function() {
-      window.activeTaskIndex++;
+      var activeTask;
+      activeTaskIndex++;
       if (activeTaskIndex < test.tasks.size()) {
-        window.activeTask = test.tasks.at(window.activeTaskIndex);
+        activeTask = test.tasks.at(activeTaskIndex);
         return this.navigate("#tasks/" + activeTask.cid, true);
       } else {
         return this.complete();
