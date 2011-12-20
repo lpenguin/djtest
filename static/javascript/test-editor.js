@@ -174,6 +174,8 @@ WordTaskView = Backbone.View.extend({
 		this.template = $('#word-task-template').template();
 		this.modelEdit = refClone( this.model, WordTask );
 		this.modelEdit.words.bind('remove', this.reAddAll, this);
+		if( ! this.modelEdit.scale.id )
+      		this.modelEdit.scale = scales.first();
     },  
 	events: {
 		"click button[name=add-button]": "addWord",
@@ -205,7 +207,7 @@ WordTaskView = Backbone.View.extend({
         return this;
     },
     makeRichEditor: function(){
-        this.$(".rich").redaktor({django_csrf: csrfTocken});//tinymce( richEditorSettings );
+        this.$(".rich").redactor({django_csrf: csrfTocken});//tinymce( richEditorSettings );
     },
     addAll: function(words){
         var that = this;

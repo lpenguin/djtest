@@ -65,15 +65,15 @@ class TestResult(models.Model):
         verbose_name = _('Test result')
         verbose_name_plural = _('Test results')
         
-class ScaleValue(models.Model):
-    testResult = models.ForeignKey( TestResult, verbose_name = _('Test result') )
-    scale = models.ForeignKey( Scale, verbose_name = _('Scale') )
-    value = models.IntegerField( verbose_name = _('Value'))
-     
-    def __unicode__(self):
-        return self.testResult.name + self.scale.name + str(self.value)
-    
-    class Meta:
-        verbose_name = _('Scale value')
-        verbose_name_plural = _('Scale values')    
+#class ScaleValue(models.Model):
+#    testResult = models.ForeignKey( TestResult, verbose_name = _('Test result') )
+#    scale = models.ForeignKey( Scale, verbose_name = _('Scale') )
+#    value = models.IntegerField( verbose_name = _('Value'))
+#     
+#    def __unicode__(self):
+#        return self.testResult.user.username + " - " + self.testResult.test.name + " - " +self.scale.name + " = " +str(self.value)
+#    
+#    class Meta:
+#        verbose_name = _('Scale value')
+#        verbose_name_plural = _('Scale values')    
     

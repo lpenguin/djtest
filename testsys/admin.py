@@ -1,8 +1,18 @@
 from django.contrib import admin
-from djtest.testsys.models import Property, Test, Scale, TestResult, ScaleValue
+from djtest.testsys.models import Property, Test, Scale, TestResult
 from djtest.testsys import admin_views
 from django.conf.urls.defaults import patterns, url
+from admin_widgets import TestResultWidget
+from django.utils.translation import ugettext as _
 #from djtest.testsys import admin_forms
+
+from django import forms
+
+class TestResultForm(forms.BaseModelForm):
+	result = forms.Field( label = _("Results"), widget=TestResultWidget)
+	class Meta:
+		model = TestResult
+		
 
 class TestInline(admin.StackedInline):
 	model = Test
@@ -39,9 +49,17 @@ class TestAdmin(admin.ModelAdmin):
 			  r"/static/javascript/test-editor.js"
 			)
 
+class TestResultAdmin(admin.ModelAdmin):
+	model = TestResult
+	#readonly_fields = ["resultData"]
+	#form = TestResultForm
+	def formfield_for_dbfield(self, db_field, **kwargs):
+		if db_field.name == 'resultData':
+			kwargs['widget'] = TestResultWidget
+		return super(TestResultAdmin,self).formfield_for_dbfield(db_field,**kwargs)
 
 admin.site.register(Property, PropertyAdmin)
 admin.site.register(Test, TestAdmin)
 admin.site.register(Scale)
-admin.site.register(TestResult)
-admin.site.register(ScaleValue)
+admin.site.register(TestResult, TestResultAdmin)
+#admin.site.register(ScaleValue)
