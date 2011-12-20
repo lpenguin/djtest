@@ -26,7 +26,7 @@ table.tasks-table{
 	width: 500px;
 }
 table[name=tasks-table] td.last{
-	width: 150px;
+	width: 200px;
 }
 
 textarea[name=description]{
