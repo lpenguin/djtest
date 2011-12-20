@@ -111,6 +111,7 @@ class window.WordTask extends Task
   refModel:
     field: "scale"
     model: Scale
+    
 
 
 class window.ChoiceTask extends Task

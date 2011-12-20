@@ -46,6 +46,8 @@
 		{% endblock %}
 		
 {% block content %}
+<p>{{test.instruction}}</p>
+<br>
 <div id="app" ></div>
 
 <script type="text/x-jquery-tmpl" id="timer-template" >
@@ -62,6 +64,7 @@ Time elapsed: <span id="time"></span>
 
 <script type="text/x-jquery-tmpl" id="test-template" >
 	<h1>{{test.name}}</h1>
+	<p>{{test.instruction}}</p>
 	<ul>
 	<% test.tasks.each(function( task, index){%>
 		<li>

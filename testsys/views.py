@@ -7,12 +7,14 @@ from django import forms
 from django.utils.translation import ugettext as _
 from django.contrib import auth
 from datetime import datetime
+from test_util import *
+import json
 import os
 
 class AuthForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField()
-  
+
 def all_tests(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect("/login")
@@ -20,7 +22,13 @@ def all_tests(request):
     if request.method == "POST":
         test = Test.objects.get( id=request.POST['testid'] )
         result = TestResult( test=test, user=request.user, resultData=request.POST["data"], date=datetime.now() )
+        
+        
+        scale_values = calculate_results( result, request.POST["data"] )
+        result.resultData = json.dumps(scale_values)
         result.save()
+        #for scale_value in scale_values:
+        #    scale_value.save()
         
     tests = Test.objects.order_by( 'order')
     
@@ -39,7 +47,7 @@ def test_player(request, testid):
 
     try:
         test = Test.objects.get( id=testid )
-        clearTestAnswers( test )
+        test.data = clear_test_answers( test.data )
         #data = test["data"]
         #testData = json.loads(data)
         scales = Scale.objects.filter( test = test )
@@ -78,9 +86,6 @@ def login(request):
     else:
         form = AuthForm()
     return render_to_response('login_form.html', {'form': form, 'error': error }, RequestContext(request, {}))
-
-def clearTestAnswers( test ):
-    pass
 
 
     
