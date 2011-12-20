@@ -1,5 +1,5 @@
 from django.contrib import admin
-from djtest.testsys.models import Property, Test, Scale, TestResult
+from djtest.testsys.models import Property, Test, Scale, TestResult, ScaleValue
 from djtest.testsys import admin_views
 from django.conf.urls.defaults import patterns, url
 #from djtest.testsys import admin_forms
@@ -44,3 +44,4 @@ admin.site.register(Property, PropertyAdmin)
 admin.site.register(Test, TestAdmin)
 admin.site.register(Scale)
 admin.site.register(TestResult)
+admin.site.register(ScaleValue)
