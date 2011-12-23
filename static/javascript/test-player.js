@@ -1,7 +1,43 @@
 (function() {
-  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+  var __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   window.app = "#app";
+
+  window.WordView = (function() {
+
+    __extends(WordView, Backbone.View);
+
+    function WordView() {
+      WordView.__super__.constructor.apply(this, arguments);
+    }
+
+    WordView.prototype.initialize = function() {
+      return this.template = $('#word-template').html();
+    };
+
+    WordView.prototype.tagName = "tr";
+
+    WordView.prototype.events = {
+      "click [name=delete-button]": "delete"
+    };
+
+    WordView.prototype.render = function() {
+      $(this.el).html(_.template(this.template, {
+        word: this.model
+      }));
+      return this;
+    };
+
+    WordView.prototype["delete"] = function() {
+      this.model.destroy();
+      $(this.el).remove();
+      return false;
+    };
+
+    return WordView;
+
+  })();
 
   window.WordTaskView = (function() {
 
@@ -12,11 +48,13 @@
     }
 
     WordTaskView.prototype.initialize = function() {
-      return this.template = $('#word-task-template').html();
+      this.template = $('#word-task-template').html();
+      return this.findedWords = new Words;
     };
 
     WordTaskView.prototype.events = {
-      "click [name=add-button]": "addClick"
+      "click [name=add-button]": "addClick",
+      "click [name=done-button]": "done"
     };
 
     WordTaskView.prototype.render = function() {
@@ -27,7 +65,32 @@
       return $(this.el).appendTo(app);
     };
 
+    WordTaskView.prototype.add = function(word) {
+      var view;
+      this.findedWords.add(word);
+      view = new WordView({
+        model: word
+      });
+      return this.$("[name=words-ul]").append(view.render().el);
+    };
+
     WordTaskView.prototype.addClick = function() {
+      var text, word;
+      text = this.$("[name=text]").getSelection().text;
+      word = new Word({
+        word: text
+      });
+      this.add(word);
+      return false;
+    };
+
+    WordTaskView.prototype.done = function() {
+      this.model.set({
+        result: {
+          findedWords: this.findedWords.toJSON()
+        }
+      });
+      router.nextTask();
       return false;
     };
 
@@ -44,7 +107,8 @@
     }
 
     ChoiceView.prototype.initialize = function() {
-      return this.template = $('#choice-template').html();
+      this.template = $('#choice-template').html();
+      return _.extend(this, Backbone.Events);
     };
 
     ChoiceView.prototype.events = {
@@ -59,6 +123,7 @@
     };
 
     ChoiceView.prototype.click = function() {
+      this.trigger('selected', this.model);
       return false;
     };
 
@@ -92,7 +157,8 @@
       view = new ChoiceView({
         model: choice
       });
-      return this.$("[name=choices-ul]").append(view.render().el);
+      this.$("[name=choices-ul]").append(view.render().el);
+      return view.bind('selected', this.choiceSelected, this);
     };
 
     ChoiceTaskView.prototype.addAll = function() {
@@ -100,6 +166,15 @@
       return this.model.choices.each(function(choice) {
         return _this.add(choice);
       });
+    };
+
+    ChoiceTaskView.prototype.choiceSelected = function(choice) {
+      this.model.set({
+        result: {
+          choice: choice.toJSON()
+        }
+      });
+      return router.nextTask();
     };
 
     return ChoiceTaskView;
@@ -126,7 +201,41 @@
       return $(this.el).appendTo(app);
     };
 
+    TestView.prototype.sendResults = function() {
+      this.$("[name=data]").val(JSON.stringify(test.makeJSON()));
+      return this.$("form").submit();
+    };
+
     return TestView;
+
+  })();
+
+  window.SendResultsView = (function() {
+
+    __extends(SendResultsView, Backbone.View);
+
+    function SendResultsView() {
+      SendResultsView.__super__.constructor.apply(this, arguments);
+    }
+
+    SendResultsView.prototype.initialize = function() {
+      return this.template = $('#send-template').html();
+    };
+
+    SendResultsView.prototype.render = function() {
+      $(app).empty();
+      $(this.el).html(_.template(this.template, {
+        test: this.model
+      }));
+      return $(this.el).appendTo(app);
+    };
+
+    SendResultsView.prototype.sendResults = function() {
+      this.$("[name=data]").val(JSON.stringify(test.makeJSON()));
+      return this.$("form").submit();
+    };
+
+    return SendResultsView;
 
   })();
 
@@ -139,8 +248,25 @@
     }
 
     TestRouter.prototype.routes = {
-      "": "showTest",
-      "tasks/:taskid": "showTask"
+      "": "start",
+      "secret": "showTest",
+      "send": "sendResults",
+      "tasks/:taskid": "showTask",
+      "complete": "complete"
+    };
+
+    TestRouter.prototype.start = function() {
+      return this.showTask(activeTask.cid);
+    };
+
+    TestRouter.prototype.sendResults = function() {
+      var view;
+      if (this.completeTest) {
+        view = new SendResultsView();
+        view.render();
+        view.sendResults();
+        return false;
+      }
     };
 
     TestRouter.prototype.showTest = function() {
@@ -148,12 +274,13 @@
       view = new TestView({
         model: test
       });
-      return view.render();
+      view.render();
+      return view.sendResults();
     };
 
     TestRouter.prototype.showTask = function(taskid) {
-      var info, task, view;
-      var _this = this;
+      var info, task, view,
+        _this = this;
       task = test.tasks.find(function(task) {
         return task.cid === taskid;
       });
@@ -165,7 +292,19 @@
     };
 
     TestRouter.prototype.nextTask = function() {
-      return null;
+      var activeTask;
+      activeTaskIndex++;
+      if (activeTaskIndex < test.tasks.size()) {
+        activeTask = test.tasks.at(activeTaskIndex);
+        return this.navigate("#tasks/" + activeTask.cid, true);
+      } else {
+        return this.complete();
+      }
+    };
+
+    TestRouter.prototype.complete = function() {
+      this.completeTest = true;
+      return this.navigate("send", true);
     };
 
     return TestRouter;

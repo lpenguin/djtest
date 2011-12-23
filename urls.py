@@ -8,6 +8,7 @@ from djtest.testsys import views
 
 admin.autodiscover()
 
+#
 urlpatterns = patterns('',
     # Example:
     # (r'^djtest/', include('djtest.foo.urls')),
