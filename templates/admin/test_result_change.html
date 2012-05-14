@@ -1,0 +1,20 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block after_field_sets %}
+{% if change %}{% if not is_popup %}
+<script type="text/javascript" src="/static/javascript/jquery.js"></script>
+<script type="text/javascript" src="/static/javascript/underscore.js"></script>
+<script type="text/javascript" src="/static/javascript/backbone.js"></script>
+<script type="text/javascript" src="/static/javascript/jquery.tmpl.js"></script>
+<script type="text/javascript" src="/static/javascript/json2.js"></script>
+<script type="text/javascript" src="/static/javascript/backbone-refmodel.js"></script>
+<!--<script type="text/javascript" src='/static/javascript/models.js'></script>-->
+<script type="text/javascript" src='/static/javascript/models.js'></script>
+<script type="text/javascript" src="/static/javascript/test-editor.js"></script>
+<script type="text/javascript" >
+    window.testR = {{ original.resultData|safe }};
+</script>
+        <div>rs: {{ original.resultDataCalulated|safe }}</div>
+{% endif %}{% endif %}
+{% endblock %}

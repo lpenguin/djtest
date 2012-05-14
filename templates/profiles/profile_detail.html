@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table>
+<tr><td><b>Фамилия Имя Отчество</b></td><td>{{profile.fio}}</td></tr>
+<tr><td><b>Домашний телефон</b></td><td>{{profile.homePhone}}</td></tr>
+<tr><td><b>Мобильный телефон</b></td><td>{{profile.cellPhone}}</td></tr>
+<tr><td><b>Возраст</b></td><td>{{profile.age}}</td></tr>
+<tr><td><b>Адрес постоянной регистрации</b></td><td>{{profile.addressRegister}}</td></tr>
+<tr><td><b>Фактическое место жительства</b></td><td>{{profile.addressLive}}</td></tr>
+<tr><td><b>Ближайшее метро</b></td><td>{{profile.metro}}</td></tr>
+<tr><td><b>Семейное положение</b></td><td>{{profile.family}}</td></tr>
+<tr><td><b>Опыт работы в продажах (количество лет)</b></td><td>{{profile.yearsDiscout}}</td></tr>
+<tr><td><b>Опыт работы дизайнером</b></td><td>{{profile.yearsWork}}</td></tr>
+<tr><td><b>Знание программ</b></td><td>{{profile.programsKnowing}}</td></tr>
+</table>
+{% endblock %}

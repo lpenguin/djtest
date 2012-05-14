@@ -1,0 +1,27 @@
+﻿{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block after_field_sets %}
+{% if change %}{% if not is_popup %}
+        <p><b>Тест</b>
+	    <div id="diagrammTest"></div>
+		</p>
+        <br/>
+        <p><b>Анкета</b>
+        <div id="diagrammForm"></div>
+	    <textarea name="$name" id="id_$name" style="display:none">{{ resultData }}</textarea>
+	    </p>
+	    <script type="text/javascript" src="/static/javascript/jquery.js"></script>
+	    <script type="text/javascript" src="/static/javascript/diagramm.js"></script>
+	    <script type="text/javascript" src="/static/javascript/flotr2.min.js"></script>
+	    <script>
+			var resultData = {{ original.resultDataCalulated|safe }};
+			var testData = resultData.test;
+			var formData = resultData.form;
+			
+			drawDiagramm( "diagrammTest", testData );
+			drawDiagramm( "diagrammForm", formData );
+	    </script>
+	
+{% endif %}{% endif %}
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Регистрация</h1>
+
+<form method="post" action="">
+{% csrf_token %}
+<dl class="register">
+  {% if form.errors %}
+  <p class="errors">Исправьте следующие ошибки: {{ form.non_field_errors }}</p>
+  {% endif %}
+  <br />
+  <table>
+    {% with field=form.username %}
+    <tr>
+      <td>Придумайте имя пользователя <br/>(может состоять только из латинских букв и цифр)<br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+
+    {% with field=form.email %}
+    <tr>
+      <td>Email <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+
+    {% with field=form.password1 %}
+    <tr>
+      <td>Придумайте пароль <br/>(может состоять только из латинских букв и цифр)<br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+
+    {% with field=form.password2 %}
+    <tr>
+      <td>Повторите пароль <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+
+    {% with field=form.fio %}
+    <tr>
+      <td>Ф.И.О. <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+
+    {% with field=form.homePhone %}
+    <tr>
+      <td>Домашний телефон <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+
+    {% with field=form.cellPhone %}
+    <tr>
+      <td>Мобильный телефон <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+
+    {% with field=form.age %}
+    <tr>
+      <td>Возраст <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+
+    {% with field=form.addressRegister %}
+    <tr>
+      <td>Адрес постоянной регистрации <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+  
+    {% with field=form.addressLive %}
+    <tr>
+      <td>Фактическое место жительства <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}  
+
+    {% with field=form.metro %}
+    <tr>
+      <td>Ближайшее метро <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}  
+
+    {% with field=form.family %}
+    <tr>
+      <td>Семейное положение <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}  
+
+    {% with field=form.yearsDiscout %}
+    <tr>
+      <td>Опыт работы в продажах (количество лет) <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}  
+
+    {% with field=form.yearsWork %}
+    <tr>
+      <td>Опыт работы дизайнером (количество лет) <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}  
+
+    {% with field=form.programsKnowing %}
+    <tr>
+      <td>Знание программ (ПК) <br/> {{ field }} </td>
+      <td>
+	  {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+	  {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+      </td>
+    </tr>
+    {% endwith %}  
+
+</table>
+
+
+<input type="submit" value="Зарегистрироваться" / class="clearfix">
+
+</form>
+
+{% endblock %}

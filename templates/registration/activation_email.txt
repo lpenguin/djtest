@@ -1,0 +1,8 @@
+﻿
+Регистрация на сайте
+
+Для активации вашего аккаунта необходимо перейти по ссылке:
+
+http://lilacpenguin.alwaysdata.net/accounts/activate/{{ activation_key }}/
+
+Спасибо!
