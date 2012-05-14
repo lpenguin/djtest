@@ -3,24 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 08:32+0100\n"
-"PO-Revision-Date: 2011-11-17 15:07+0300\n"
-"Last-Translator: lpenguin <lpenguin@yandex.ru>\n"
+"POT-Creation-Date: 2012-02-27 13:34+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-
-#: templates/all_done.html:5
-msgid "Well done"
-msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: templates/base.html:18
 msgid "Welcome, "
@@ -35,6 +31,7 @@ msgid "Welcome, new user."
 msgstr ""
 
 #: templates/base.html:20
+#: templates/registration2/password_reset_complete.html:14
 msgid "Log in"
 msgstr ""
 
@@ -42,12 +39,12 @@ msgstr ""
 msgid "Test system"
 msgstr ""
 
-#: templates/login_form.html:20 templates/admin/test_edit.html:57
-#: templates/admin/test_edit.html.py:94 templates/admin/test_edit.html:177
-#: templates/admin/test_edit.html.py:203 testsys/models.py:8
-#: testsys/models.py:18 testsys/models.py:45
+#: templates/login_form.html:20 templates/admin/test_edit.html:60
+#: templates/admin/test_edit.html.py:97 templates/admin/test_edit.html:127
+#: templates/admin/test_edit.html.py:214 templates/admin/test_edit.html:240
+#: testsys/models.py:26 testsys/models.py:36 testsys/models.py:64
 msgid "Name"
-msgstr "Имя"
+msgstr ""
 
 #: templates/login_form.html:24
 msgid "Password"
@@ -57,180 +54,365 @@ msgstr ""
 msgid "Enter"
 msgstr ""
 
-#: templates/test_player.html:56
-msgid "Sending results"
-msgstr ""
-
-#: templates/test_player.html:85
+#: templates/test_player.html:127 templates/admin/test_edit.html:191
 msgid "Add"
 msgstr ""
 
-#: templates/test_player.html:86
-msgid "Finded words"
+#: templates/test_player.html:140 templates/admin/test_edit.html:170
+#: templates/admin/test_edit.html.py:180 templates/admin/test_edit.html:198
+msgid "Delete"
 msgstr ""
 
-#: templates/test_player.html:90 templates/admin/test_edit.html:77
-#: templates/admin/test_edit.html.py:118
-msgid "Done"
-msgstr "Готово"
-
-#: templates/test_player.html:94 templates/admin/test_edit.html:137
-#: templates/admin/test_edit.html.py:147 templates/admin/test_edit.html:161
-msgid "Delete"
-msgstr "Удалить"
-
-#: templates/admin/test_edit.html:3 templates/admin/test_edit.html.py:169
+#: templates/admin/test_edit.html:4 templates/admin/test_edit.html.py:206
 msgid "Test editing"
-msgstr "Редактирование теста"
+msgstr ""
 
-#: templates/admin/test_edit.html:54 templates/admin/test_edit.html.py:91
+#: templates/admin/test_edit.html:57 templates/admin/test_edit.html.py:94
+#: templates/admin/test_edit.html:124
 msgid "Task editing"
-msgstr "Редактирование задания"
+msgstr ""
 
-#: templates/admin/test_edit.html:56 templates/admin/test_edit.html.py:93
-#: testsys/models.py:22
+#: templates/admin/test_edit.html:59 templates/admin/test_edit.html.py:96
+#: templates/admin/test_edit.html:126 testsys/models.py:41
 msgid "Data"
-msgstr "Данные"
+msgstr ""
 
-#: templates/admin/test_edit.html:60 templates/admin/test_edit.html.py:97
-#: testsys/models.py:9 testsys/models.py:19 testsys/models.py:46
+#: templates/admin/test_edit.html:63 templates/admin/test_edit.html.py:100
+#: templates/admin/test_edit.html:130 testsys/models.py:27
+#: testsys/models.py:37 testsys/models.py:65
 msgid "Description"
-msgstr "Описание"
+msgstr ""
 
-#: templates/admin/test_edit.html:65
+#: templates/admin/test_edit.html:68
 msgid "Choices"
-msgstr "Пункты"
+msgstr ""
 
-#: templates/admin/test_edit.html:68 templates/admin/test_edit.html.py:111
+#: templates/admin/test_edit.html:71 templates/admin/test_edit.html.py:144
 msgid "Num"
-msgstr "Номер"
+msgstr ""
 
-#: templates/admin/test_edit.html:69 templates/admin/test_edit.html.py:104
-#: templates/admin/test_edit.html:105
+#: templates/admin/test_edit.html:72 templates/admin/test_edit.html.py:137
+#: templates/admin/test_edit.html:138
 msgid "Text"
-msgstr "Текст"
+msgstr ""
 
-#: templates/admin/test_edit.html:70 templates/admin/test_edit.html.py:102
-#: testsys/models.py:53
+#: templates/admin/test_edit.html:73 templates/admin/test_edit.html.py:102
+#: templates/admin/test_edit.html:135 testsys/models.py:74
 msgid "Scale"
-msgstr "Шкала"
+msgstr ""
 
-#: templates/admin/test_edit.html:71
+#: templates/admin/test_edit.html:74
 msgid "Value"
-msgstr "Значение"
+msgstr ""
 
-#: templates/admin/test_edit.html:72 templates/admin/test_edit.html.py:113
-#: templates/admin/test_edit.html:177
+#: templates/admin/test_edit.html:75 templates/admin/test_edit.html.py:146
+#: templates/admin/test_edit.html:214
 msgid "Action"
-msgstr "Действие"
+msgstr ""
 
-#: templates/admin/test_edit.html:78 templates/admin/test_edit.html.py:119
-#: templates/admin/test_edit.html:183 templates/admin/test_edit.html.py:210
+#: templates/admin/test_edit.html:80 templates/admin/test_edit.html.py:119
+#: templates/admin/test_edit.html:151
+msgid "Done"
+msgstr ""
+
+#: templates/admin/test_edit.html:81 templates/admin/test_edit.html.py:120
+#: templates/admin/test_edit.html:152 templates/admin/test_edit.html.py:220
+#: templates/admin/test_edit.html:247
 msgid "Cancel"
-msgstr "Отмена"
+msgstr ""
 
-#: templates/admin/test_edit.html:79
+#: templates/admin/test_edit.html:82
 msgid "Add choice"
-msgstr "Добавить пункт"
+msgstr ""
 
-#: templates/admin/test_edit.html:112
+#: templates/admin/test_edit.html:145
 msgid "Word"
 msgstr ""
 
-#: templates/admin/test_edit.html:120
+#: templates/admin/test_edit.html:153
 msgid "Add word"
 msgstr ""
 
-#: templates/admin/test_edit.html:146
+#: templates/admin/test_edit.html:179
 msgid "Copy"
-msgstr "Копировать"
+msgstr ""
 
-#: templates/admin/test_edit.html:171
+#: templates/admin/test_edit.html:208
 msgid "Time"
 msgstr ""
 
-#: templates/admin/test_edit.html:174
+#: templates/admin/test_edit.html:211
 msgid "Tasks"
-msgstr "Задания"
+msgstr ""
 
-#: templates/admin/test_edit.html:182
+#: templates/admin/test_edit.html:219
 msgid "Save"
-msgstr "Сохранить"
+msgstr ""
 
-#: templates/admin/test_edit.html:184
+#: templates/admin/test_edit.html:221
 msgid "Add task"
-msgstr "Добавить задание"
+msgstr ""
 
-#: templates/admin/test_edit.html:200
+#: templates/admin/test_edit.html:237
 msgid "New task"
-msgstr "Новое задание"
+msgstr ""
 
-#: templates/admin/test_edit.html:204
+#: templates/admin/test_edit.html:241
 msgid "Type"
-msgstr "Тип"
+msgstr ""
 
-#: templates/admin/test_edit.html:209
+#: templates/admin/test_edit.html:246
 msgid "Continue"
-msgstr "Далее"
+msgstr ""
 
-#: testsys/models.py:14 testsys/models.py:21
+#: templates/registration2/password_change_done.html:4
+#: templates/registration2/password_change_done.html:8
+msgid "Password change successful"
+msgstr ""
+
+#: templates/registration2/password_change_done.html:10
+msgid "Your password was changed."
+msgstr ""
+
+#: templates/registration2/password_change_form.html:4
+#: templates/registration2/password_change_form.html:8
+msgid "Password change"
+msgstr ""
+
+#: templates/registration2/password_change_form.html:10
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#: templates/registration2/password_change_form.html:15
+msgid "Old password:"
+msgstr ""
+
+#: templates/registration2/password_change_form.html:17
+#: templates/registration2/password_reset_confirm.html:18
+msgid "New password:"
+msgstr ""
+
+#: templates/registration2/password_change_form.html:19
+#: templates/registration2/password_reset_confirm.html:20
+msgid "Confirm password:"
+msgstr ""
+
+#: templates/registration2/password_change_form.html:21
+#: templates/registration2/password_reset_confirm.html:21
+msgid "Change my password"
+msgstr ""
+
+#: templates/registration2/password_reset_complete.html:6
+#: templates/registration2/password_reset_complete.html:10
+msgid "Password reset complete"
+msgstr ""
+
+#: templates/registration2/password_reset_complete.html:12
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+
+#: templates/registration2/password_reset_confirm.html:6
+#: templates/registration2/password_reset_form.html:6
+#: templates/registration2/password_reset_form.html:10
+msgid "Password reset"
+msgstr ""
+
+#: templates/registration2/password_reset_confirm.html:12
+msgid "Enter new password"
+msgstr ""
+
+#: templates/registration2/password_reset_confirm.html:14
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+
+#: templates/registration2/password_reset_confirm.html:26
+msgid "Password reset unsuccessful"
+msgstr ""
+
+#: templates/registration2/password_reset_confirm.html:28
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+
+#: templates/registration2/password_reset_done.html:6
+#: templates/registration2/password_reset_done.html:10
+msgid "Password reset successful"
+msgstr ""
+
+#: templates/registration2/password_reset_done.html:12
+msgid ""
+"We've e-mailed you instructions for setting your password to the e-mail "
+"address you submitted. You should be receiving it shortly."
+msgstr ""
+
+#: templates/registration2/password_reset_email.html:2
+msgid "You're receiving this e-mail because you requested a password reset"
+msgstr ""
+
+#: templates/registration2/password_reset_email.html:3
+#, python-format
+msgid "for your user account at %(site_name)s"
+msgstr ""
+
+#: templates/registration2/password_reset_email.html:5
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: templates/registration2/password_reset_email.html:9
+msgid "Your username, in case you've forgotten:"
+msgstr ""
+
+#: templates/registration2/password_reset_email.html:11
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: templates/registration2/password_reset_email.html:13
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#: templates/registration2/password_reset_form.html:12
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll e-mail "
+"instructions for setting a new one."
+msgstr ""
+
+#: templates/registration2/password_reset_form.html:16
+msgid "E-mail address:"
+msgstr "E-mail"
+
+#: templates/registration2/password_reset_form.html:16
+msgid "Reset my password"
+msgstr "Восстановить мой пароль"
+
+#: testsys/admin.py:13
+msgid "Results"
+msgstr ""
+
+#: testsys/forms.py:7
+msgid "FIO"
+msgstr "Ф.И.О."
+
+#: testsys/forms.py:8
+msgid "Home phone"
+msgstr "Домашний телефон"
+
+#: testsys/forms.py:9
+msgid "Cell phone"
+msgstr "Мобильный телефон"
+
+#: testsys/forms.py:10
+msgid "Age"
+msgstr "Возраст"
+
+msgid "Email address"
+msgstr "Email"
+
+#: testsys/forms.py:11
+msgid "Registration address"
+msgstr "Адрес постоянной регистрации"
+
+#: testsys/forms.py:12
+msgid "Living address"
+msgstr "Фактическое место жительства"
+
+#: testsys/forms.py:13
+msgid "Metro station"
+msgstr "Ближайшее метро"
+
+#: testsys/forms.py:14
+msgid "Family status"
+msgstr "Семейное положение"
+
+#: testsys/forms.py:15
+msgid "Years discount"
+msgstr "Опыт работы в продажах (количество лет)"
+
+#: testsys/forms.py:16
+msgid "Working home"
+msgstr "Опыт работы дизайнером"
+
+#: testsys/forms.py:17
+msgid "Knowed programs"
+msgstr "Знание программ (ПК) "
+
+#: testsys/models.py:32 testsys/models.py:40
 msgid "Property"
 msgstr ""
 
-#: testsys/models.py:15
+#: testsys/models.py:33
 msgid "Properties"
 msgstr ""
 
-#: testsys/models.py:20
+#: testsys/models.py:38
 msgid "Instruction"
 msgstr ""
 
-#: testsys/models.py:23
+#: testsys/models.py:42
 msgid "Order"
 msgstr ""
 
-#: testsys/models.py:24
+#: testsys/models.py:43
 msgid "Time to make"
 msgstr ""
 
-#: testsys/models.py:41 testsys/models.py:47 testsys/models.py:58
-msgid "Test"
-msgstr "Тест"
-
-#: testsys/models.py:42
-msgid "Tests"
-msgstr "Тесты"
-
-#: testsys/models.py:54
-#, fuzzy
-msgid "Scales"
-msgstr "Шкала"
-
-#: testsys/models.py:57
-msgid "User"
+#: testsys/models.py:44
+msgid "Test type"
 msgstr ""
 
-#: testsys/models.py:59
+#: testsys/models.py:60 testsys/models.py:66 testsys/models.py:79
+msgid "Test"
+msgstr ""
+
+#: testsys/models.py:61
+msgid "Tests"
+msgstr ""
+
+#: testsys/models.py:67
+msgid "Minimum value"
+msgstr "Минимальное значение"
+
+#: testsys/models.py:68
+msgid "Maximum value"
+msgstr "Максимальное значение"
+
+#: testsys/models.py:75
+msgid "Scales"
+msgstr "Шкалы"
+
+#: testsys/models.py:78 testsys/models.py:90
+msgid "User"
+msgstr "Пользователь"
+
+#: testsys/models.py:80 testsys/models.py:91
 msgid "Result data"
 msgstr ""
 
-#: testsys/models.py:60
-#, fuzzy
+#: testsys/models.py:81 testsys/models.py:92
 msgid "Date"
-msgstr "Данные"
+msgstr "Дата"
 
-#: testsys/models.py:65
-#, fuzzy
+#: testsys/models.py:86
 msgid "Test result"
-msgstr "Редактирование теста"
+msgstr "Результат теста"
 
-#: testsys/models.py:66
+#: testsys/models.py:87
 msgid "Test results"
-msgstr ""
+msgstr "Результаты теста"
 
-#: testsys/views.py:77
+#: testsys/models.py:101
+msgid "Total test result"
+msgstr "Результат тестирования"
+
+#: testsys/models.py:102
+msgid "Total test results"
+msgstr "Результаты тестирования"
+
+#: testsys/views.py:92
 msgid "Incorrect password"
-msgstr ""
-
-#~ msgid "Edit test"
-#~ msgstr "Редактировать тест"
+msgstr "Неверный пароль"

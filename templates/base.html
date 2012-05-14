@@ -4,7 +4,7 @@
 <head>
     <title>
     	{% block title %}
-    	Test system
+    	Система тестирования
     	{% endblock %}
     </title>
     {% block extrahead %}
@@ -15,9 +15,9 @@
 	{% block header %}
 	<div id="header" >
 		{% if user.is_authenticated %}
-  			<p>{% trans "Welcome, " %}{{ user.username }}. <a href="/logout">{% trans "Log out" %}</a></p>
+  			<p>Добро пожаловать, {{ user.username }}. <a href="/logout">{% trans "Log out" %}</a></p>
   		{% else %}
-  			<p>{% trans "Welcome, new user." %} <a href="/login">{% trans "Log in" %}</a></p>
+  			<p>Добро пожаловать <a href="/login">{% trans "Log in" %}</a></p>
 		{% endif %}
 		{% block extra_header %}
 		{% endblock %}

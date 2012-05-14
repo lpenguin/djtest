@@ -3,6 +3,18 @@
  * (c) 2006 Alex Brem <alex@0xab.cd> - http://blog.0xab.cd
  */
 
+function getSelectedText() {
+  var txt = '';
+  if (window.getSelection) {
+    txt = window.getSelection();
+  } else if (document.getSelection) {
+    txt = document.getSelection();
+  } else if (document.selection) {
+    txt = document.selection.createRange().text;
+  } else return;
+  return String(txt);
+}
+  
 (function() {
 
 	var fieldSelection = {

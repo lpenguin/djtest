@@ -1,11 +1,12 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse
-from testsys.models import Test, Scale, TestResult
+from testsys.models import Test, Scale, TestResult, TotalTestResult, TestType
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django import forms
 from django.utils.translation import ugettext as _
 from django.contrib import auth
+from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 from test_util import *
 import json
@@ -21,14 +22,11 @@ def all_tests(request):
 
     if request.method == "POST":
         test = Test.objects.get( id=request.POST['testid'] )
-        result = TestResult( test=test, user=request.user, resultData=request.POST["data"], date=datetime.now() )
-        
-        
-        scale_values = calculate_results( result, request.POST["data"] )
-        result.resultData = json.dumps(scale_values)
-        result.save()
-        #for scale_value in scale_values:
-        #    scale_value.save()
+        try:
+	  result = TestResult.objects.get( test=test, user=request.user )
+	except TestResult.DoesNotExist:
+	  result = TestResult(test=test, user=request.user, resultData=request.POST["data"], date=datetime.now() )
+	  result.save()
         
     tests = Test.objects.order_by( 'order')
     
@@ -36,7 +34,18 @@ def all_tests(request):
         result = TestResult.objects.filter( test=test, user=request.user )
         if result.count() == 0:
             return test_player( request, test.id )
-        
+    
+    try:
+      totalResult = TotalTestResult.objects.get( user=request.user )
+      #resultData = calculate_total_results( request.user ) 
+      totalResult.resultData=''#resultData;
+      totalResult.date=datetime.now();
+      totalResult.save()    
+    except TotalTestResult.DoesNotExist:
+      resultData = ''#calculate_total_results( request.user ) 
+      totalResult = TotalTestResult( user=request.user, resultData=resultData, date=datetime.now() )
+      totalResult.save()      
+      
     return render_to_response(
             "all_done.html",
             {},
@@ -48,8 +57,6 @@ def test_player(request, testid):
     try:
         test = Test.objects.get( id=testid )
         test.data = clear_test_answers( test.data )
-        #data = test["data"]
-        #testData = json.loads(data)
         scales = Scale.objects.filter( test = test )
     except Test.DoesNotExist:
         return "Test does not exist"

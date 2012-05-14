@@ -1,4 +1,4 @@
-{% extends "admin/base_site.html" %}
+﻿{% extends "admin/base_site.html" %}
 {% load i18n %}
 {% load coffeescript %}
 {% block title %}{% trans "Test editing" %}{% endblock %}
@@ -88,6 +88,36 @@
 		</table>
 	</div>
 	
+</script>
+
+<script type="text/x-jquery-tmpl" id="speed-task-template" >
+	<h3>{% trans "Task editing" %}</h3>
+	<div name="main" class="">
+		<h4>{% trans "Data" %}</h4>
+		<label for="name">{% trans "Name" %}</label> <br/>
+		<input type="text" name="name" value="${model.get('name')}" /> <br/>
+		
+		<label for="description">{% trans "Description" %}</label> </br>
+		<textarea name="description" class="rich">${model.get('description')}</textarea>
+		<h4>{% trans "Scale" %}</h4> 
+		<select name="scale" /> 
+	</div>
+	<div name="choices">
+		<label for="width">Ширина таблицы в клетках</label> <br/>
+		<input type="text" name="width" value="${model.get('width')}" /> <br/>	
+		<label for="height">Высота таблицы в клетках</label> <br/>
+		<input type="text" name="height" value="${model.get('height')}" /> <br/>	
+        <label for="time1">Время на 1ю попытку </label> <br/>
+		<input type="text" name="time1" value="${model.get('time1')}" /> <br/>	
+		<label for="time2">Время на 2ю попытку </label> <br/>
+		<input type="text" name="time2" value="${model.get('time2')}" /> <br/>	
+		<label for="time3">Время на 3ю попытку </label> <br/>
+		<input type="text" name="time3" value="${model.get('time3')}" /> <br/>	
+		<label for="time4">Время на 4ю попытку </label> <br/>
+		<input type="text" name="time4" value="${model.get('time4')}" /> <br/>	
+	</div>
+							<button name="save-button">{% trans "Done" %}</button> 
+						<button name="cancel-button" >{% trans "Cancel" %}</button>
 </script>
 
 <script type="text/x-jquery-tmpl" id="word-task-template" >

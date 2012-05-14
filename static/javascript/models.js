@@ -1,14 +1,11 @@
 (function() {
-<<<<<<< HEAD
   var __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-=======
-  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
->>>>>>> 186d59a04d6fac0ad3f4f16615e8c5472914c91c
 
   window.gettext = function(text) {
     if (text === "Choice task") "Выбор из пунктов";
     if (text === "Word task") "Поиск слов";
+    if (text === "Speed task") "Тест на моторику";
     return text;
   };
 
@@ -24,8 +21,11 @@
   window.TaskType = {
     Undef: 0,
     CHOICE: 1,
-    WORD: 2
+    WORD: 2,
+    SPEED: 3
   };
+
+  TaskType.SPEED = 3;
 
   Backbone.sync = function(method, model, success, error) {
     return success.success(model);
@@ -90,7 +90,7 @@
     };
 
     Choice.prototype.initialize = function() {
-      var res, scale;
+      var first, res, scale;
       Choice.__super__.initialize.apply(this, arguments);
       scale = this.get('scale');
       if (scale != null) {
@@ -100,8 +100,23 @@
         });
         this.scales.add(res);
         this.unset('scale');
-        return this.unset('value');
+        this.unset('value');
       }
+      first = scales.models[0];
+      return this.scales.each(function(scale, i) {
+        if (!scales.findById(scale.id)) {
+          scale.id = first.id;
+          scale.set({
+            id: first.get('id')
+          });
+          scale.set({
+            name: first.get('name')
+          });
+          return scale.set({
+            value: first.get('value')
+          });
+        }
+      });
     };
 
     Choice.prototype.url = "";
@@ -242,6 +257,56 @@
     };
 
     return ChoiceTask;
+
+  })();
+
+  window.SpeedTask = (function() {
+
+    __extends(SpeedTask, Task);
+
+    function SpeedTask() {
+      SpeedTask.__super__.constructor.apply(this, arguments);
+    }
+
+    SpeedTask.prototype.url = function() {
+      return "/task/" + this.cid;
+    };
+
+    SpeedTask.prototype.defaults = {
+      type: TaskType.SPEED,
+      mutilple: false,
+      time: "",
+      text: "",
+      time1: 10,
+      time2: 8,
+      time3: 8,
+      time4: 8,
+      height: 9,
+      width: 3
+    };
+
+    SpeedTask.prototype.refModel = {
+      field: "scale",
+      model: Scale
+    };
+
+    SpeedTask.prototype.initialize = function() {
+      SpeedTask.__super__.initialize.apply(this, arguments);
+      if (!scales.findById(this.scale.id)) {
+        this.scale.id = first.id;
+        this.scale.set({
+          id: first.get('id')
+        });
+        this.scale.set({
+          name: first.get('name')
+        });
+        return this.scale.set({
+          value: first.get('value')
+        });
+      }
+    };
+
+    return SpeedTask;
 
   })();
 

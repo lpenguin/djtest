@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% load i18n %}
 {% load coffeescript %}
 
@@ -11,13 +11,17 @@
 <script type="text/javascript" src="/static/javascript/json2.js"></script>
 <script type="text/javascript" src="/static/javascript/date.format.js"></script>
 <script type="text/javascript" src="/static/javascript/backbone-refmodel.js"></script>
-{% comment %}
-<!--<script type="text/javascript" src='/static/{% coffeescript "coffeescript/models.coffee" %}'></script>
+<script type="text/javascript" src="/static/javascript/jquery.wrapSelection.js"></script>
+<script type="text/javascript" src="/static/javascript/date.format.js"></script>
+
+<script type="text/javascript" src='/static/{% coffeescript "coffeescript/models.coffee" %}'></script>
 <script type="text/javascript" src='/static/{% coffeescript "coffeescript/test-player.coffee" %}'></script>
---><!--<link rel="stylesheet" type="text/css" href="/static/css/test-editor.css" />-->
+{% comment %}
+<!--<script type="text/javascript" src='/static/{% coffeescript "coffeescript/models.coffee" %}'></script>-->
+<!--<link rel="stylesheet" type="text/css" href="/static/css/test-editor.css" />-->
 {% endcomment %}
-<script type="text/javascript" src="/static/javascript/models.js"></script>
-<script type="text/javascript" src="/static/javascript/test-player.js"></script>
+<!--<script type="text/javascript" src="/static/javascript/models.js"></script>-->
+<!--<script type="text/javascript" src="/static/javascript/test-player.js"></script>-->
 <script type="text/javascript" >
 	$(document).ready(function($) {
 		var testData = {% if test.data %} {{test.data|safe}} {%else%} {} {% endif %};
@@ -31,6 +35,7 @@
 		{% endfor %}
 		]);
 		test = new Test( testData );
+        test.time = {{test.time}};
 		testid = {{testid}}
 		window.activeTask = test.tasks.first();
 		window.activeTaskIndex = 0;
@@ -49,16 +54,16 @@
 		{% endblock %}
 		
 {% block content %}
-<p>{{test.instruction}}</p>
+<div name="intruction"><p>{{test.instruction}}</p></div>
 <br>
 <div id="app" ></div>
 
 <script type="text/x-jquery-tmpl" id="timer-template" >
-Time elapsed: <span id="time"></span>
+Времени осталось: <span id="time"></span>
 </script> 
 
 <script type="text/x-jquery-tmpl" id="send-template" >
-		{% trans "Sending results" %}...
+		Отправка результатов...
 		<form action="/test" method="POST">
 		{% csrf_token %}
 		<input type="hidden" name="data" />
@@ -79,21 +84,60 @@ Time elapsed: <span id="time"></span>
 	</ul>
 </script>
 
+<script type="text/x-jquery-tmpl" id="task-complete-template" >
+  <h3>Тест закончен</h3>
+  <p>
+   Приступить к следующему?
+  </p>
+  <p>
+    <a href="#" name="start-test">Начать</a>
+  </p>
+</script>
+
 <script type="text/x-jquery-tmpl" id="choice-task-template" >
-	<%=task.get("description")%>
-	<ul name="choices-ul">	
+   <div name="intro" class="">
+    <button name="start-button">Начать</button> 
+   </div>	
+   <div name="main" class="">
+    <div class="task-description"><%=task.get("description")%></div>
+	<ul name="choices-ul" class="choices-ul">	
 	</ul>
+   </div>
+</script>
+
+<script type="text/x-jquery-tmpl" id="speed-task-template" >
+   <div name="intro" class="">
+    <button name="start-button">Начать</button> 
+   </div>	
+   <div name="main" class="">
+    <div class="task-description"><%=task.get("description")%></div>
+    <div name='clicks-div' >Нажато: <span name='clicks' >0</span> </div>
+    <div name='step-div'>Попытка: <span name='step' >1</span> </div>
+    <div name='result-div' class='hidden'>
+        Вы нажали: <span name='clicks-result' >0</span> <br />
+        <button name='next' >Далее</button>
+    </div>
+    <div name="table"></div>
+   </div>
+</script>
+
+<script type="text/x-jquery-tmpl" id="speed-task-table-template" >
+
 </script>
 
 <script type="text/x-jquery-tmpl" id="word-task-template" >
-	<%=task.get("description")%>
-	<textarea name="text" class="words"><%=task.get("text") %></textarea> <br />
+    <div name="main" class="hidden">
+	<p name="text" class="words"><%=task.get("text") %></p> <br />
 	<button name="add-button">{% trans "Add" %}</button>
-	<h2>{% trans "Finded words" %}</h2>
+	<h2>Найденные слова</h2>
 	
 	<table name="words-ul" class="words">	
 	</table>
-	<button name="done-button">{% trans "Done" %}</button>
+   </div>
+   <div name="intro" >
+    <p><%=task.get("description")%></p>
+    <button name="start-button">Начать</button> 
+    </div>
 </script>
 
 <script type="text/x-jquery-tmpl" id="word-template" >

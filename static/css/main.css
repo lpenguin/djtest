@@ -105,6 +105,18 @@ h2 {
   #credits a {
     color: #888;
   }
+  .hidden {
+      display: none;
+  }
 
+.selected-word {
+	background-color: rgb(51, 153, 255)
+}
 
+.task-description {
+    /*height: 80px;*/
+}
 
+.errors,.myerrors {
+  font-weight: bold;
+}

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/eval PATH=$PATH:/home/lilacpenguin/opt/bin PYTHONPATH=/home/lilacpenguin/opt/lib/python2.6/site-packages/ python
 import os, sys
 
 _PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

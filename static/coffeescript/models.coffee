@@ -3,6 +3,8 @@ window.gettext = (text) ->
         "Выбор из пунктов"
     if text == "Word task"
         "Поиск слов"    
+    if text == "Speed task"
+        "Тест на моторику" 
     text
     
 window.getSelected = ->
@@ -12,7 +14,8 @@ window.getSelected = ->
     document.selection.createRange().text
     ""
 
-window.TaskType = Undef: 0,  CHOICE: 1, WORD: 2 
+window.TaskType = Undef: 0,  CHOICE: 1, WORD: 2, SPEED: 3,
+TaskType.SPEED = 3
 
 Backbone.sync = (method, model, success, error) -> 
   success.success(model)
@@ -45,14 +48,20 @@ class window.Choice extends RefModel
   initialize: ->
     super    
     scale = this.get 'scale'
-
+    
     if scale?
       res = @makeScale scale
       res.set value: @get 'value'
       @scales.add res
       this.unset 'scale'
       this.unset 'value'
-    
+    first = scales.models[0]
+    @scales.each (scale, i) ->
+      if not scales.findById( scale.id )
+        scale.id = first.id
+        scale.set( id: first.get('id') )
+        scale.set( name: first.get('name') )
+        scale.set( value: first.get('value') )
   url: ""
   makeScale: (data) ->
     if not _.isString(data) #data is Scale Object Descriptor
@@ -111,6 +120,14 @@ class window.WordTask extends Task
   refModel:
     field: "scale"
     model: Scale
+  initialize: ->
+    super    
+    first = scales.models[0]
+    if not scales.findById( @scale.id )
+        @scale.id = first.id
+        @scale.set( id: first.get('id') )
+        @scale.set( name: first.get('name') )
+        @scale.set( value: first.get('value') )
     
 
 
@@ -124,7 +141,33 @@ class window.ChoiceTask extends Task
   refCollection:
     field: "choices"
     collection: Choices
-
+    
+    
+class window.SpeedTask extends Task
+  url: -> 
+    "/task/"+@cid;
+  defaults:
+    type: TaskType.SPEED
+    mutilple: false
+    time: ""
+    text: ""
+    time1: 10
+    time2: 8
+    time3: 8
+    time4: 8
+    height: 9
+    width: 3
+  refModel:
+    field: "scale"
+    model: Scale
+  initialize: ->
+    super    
+    if not scales.findById( @scale.id )
+        @scale.id = first.id
+        @scale.set( id: first.get('id') )
+        @scale.set( name: first.get('name') )
+        @scale.set( value: first.get('value') )
+    
 class window.Tasks extends RefCollection
     model: Task
     url: ""

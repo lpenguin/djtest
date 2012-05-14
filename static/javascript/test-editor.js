@@ -6,6 +6,8 @@ function gettext(text){
         return "Выбор из пунктов";
     if( text == "Word task")
         return "Поиск слов";    
+    if( text == "Speed task")
+        return "Задание на моторику";   
     if( text == "No scales")
         return "Вы не добавили шкалы";    
     return text;
@@ -14,7 +16,8 @@ function gettext(text){
 TaskType = {
 	Undef: 0,
     CHOICE: 1,
-    WORD: 2
+    WORD: 2,
+    SPEED: 3,
 };
 
 var app = "#app";
@@ -265,6 +268,7 @@ ChoiceTaskView = Backbone.View.extend({
 		this.template = $('#choice-task-template').template();
 		this.modelEdit = refClone( this.model, ChoiceTask );
 		this.modelEdit.choices.bind('remove', this.reAddAll, this);
+
     },  
 	events: {
 		"click button[name=add-button]": "addChoice",
@@ -329,6 +333,79 @@ ChoiceTaskView = Backbone.View.extend({
 	changeDescription: function(){
 		return;
 	}
+});
+
+SpeedTaskView = Backbone.View.extend({
+    initialize: function() {
+		this.template = $('#speed-task-template').template();
+		this.modelEdit = refClone( this.model, ChoiceTask );
+		this.modelEdit.choices.bind('remove', this.reAddAll, this);
+            		if( ! this.modelEdit.scale ||  this.modelEdit.scale.id )
+      		this.modelEdit.scale = scales.first();
+    },  
+	events: {
+		"click button[name=cancel-button]": "cancel",
+		"click button[name=save-button]": "save",
+		"change [name=name]": "changeName",
+		"change [name=time]": "changeTime",
+		"change [name=description]": "changeDescription",
+        "change select[name=scale]": "changeScale"
+	},
+    render: function(){
+        $(app).empty();
+        $(this.el).empty();
+        $.tmpl( this.template, { model: this.modelEdit } ).appendTo( $(this.el) );
+        var self = this;
+        
+        var t = $.template("<option value='${id}' ${selected}>${name}</option>" );
+		scales.each( function( scale ){
+        	var name = scale.get("name");
+			var id = scale.get("id");
+	        var selected = self.modelEdit.scale.get("name") == scale.get("name") ? "selected" : "";
+	        self.$("select[name=scale]").append($.tmpl( t, { name: name, selected: selected, id: id }));
+        })
+        //this.addAll( this.modelEdit.choices );
+        $(this.el).appendTo(app);
+        this.makeRichEditor();
+        return this;
+    },
+    makeRichEditor: function(){
+        //this.$(".rich").tinymce( richEditorSettings );
+        this.$(".rich").redactor({django_csrf: csrfTocken});
+    },
+	save: function(){
+        this.modelEdit.set( {
+            time1: this.$("[name=time1]").val(),
+            time2: this.$("[name=time2]").val(),
+            time3: this.$("[name=time3]").val(),
+            time4: this.$("[name=time4]").val(),
+        });
+        
+		var value = this.$("[name=description]").val();
+		this.modelEdit.set({ description: value });
+		refCopy( this.modelEdit, this.model );
+        this.model.scale = scales.first();
+		testRouter.navigate("", true );
+	},
+	cancel: function(){
+		testRouter.navigate("", true );
+	},
+	changeName: function(){
+		var value = this.$("[name=name]").val();
+		this.modelEdit.set({ name: value });
+	},
+	changeTime: function(){
+		var value = this.$("[name=time]").val();
+		this.modelEdit.set({ time: value });
+	},
+	changeDescription: function(){
+		return;
+	},
+    changeScale: function(){
+    	this.modelEdit.scale = scales.findByName(
+    		this.$("select[name=scale] option:selected").text()
+    	);
+    }
 });
 
 TaskElemView = Backbone.View.extend({
@@ -436,6 +513,13 @@ TaskByType[TaskType.WORD] = {
 	model: WordTask,
 	view: WordTaskView
 };
+
+TaskByType[TaskType.SPEED] = {
+	name: gettext("Speed task"),
+	model: SpeedTask,
+	view: SpeedTaskView
+};
+
 
 NewTaskView = Backbone.View.extend({
     initialize: function() {

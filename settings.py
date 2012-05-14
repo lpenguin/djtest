@@ -1,10 +1,24 @@
-# Django settings for djtest project.
+  # Django settings for djtest project.
 import os
 
 PROJECT_ROOT = os.path.dirname(__file__).replace('\\','/')
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+ACCOUNT_ACTIVATION_DAYS = 2
+
+
+AUTH_USER_EMAIL_UNIQUE = True
+
+EMAIL_HOST = "smtp.alwaysdata.com"
+EMAIL_HOST_USER = "lilacpenguin@alwaysdata.net"
+EMAIL_HOST_PASSWORD = "gfhjkm"
+DEFAULT_FROM_EMAIL = "lilacpenguin@alwaysdata.net"
+EMAIL_PORT = "25"
+
+EMAIL_USE_TLS = False
+
+    
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -53,6 +67,8 @@ MEDIA_ROOT = os.path.join( PROJECT_ROOT, 'static' ).replace('\\','/')
 STATIC_ROOT = MEDIA_ROOT
 COFFEESCRIPT_OUTPUT_DIR = "coffeescript-cache"
 
+
+AUTH_PROFILE_MODULE = 'testsys.UserProfile'
 #COFFEE_PARAMS = "-c"
 #COFFEESCRIPT_OUTPUT_DIR = "static/coffeescript-cache"
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -85,6 +101,10 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+     'django.contrib.auth.context_processors.auth',
+     )
+     
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -104,6 +124,13 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+AUTHENTICATION_BACKENDS = (
+    'testsys.email-auth.EmailBackend',
+ )
+
+LOCALE_PATHS = (
+    '/home/lilacpenguin/opt/lib/python2.6/site-packages/registration/locale',
+)
 
 INSTALLED_APPS = (
     'djtest.testsys',
@@ -113,6 +140,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'coffeescript',
+    'registration',
+    'profiles',
 #    'staticfiles',
     # Uncomment the next line to enable the admin:
      'django.contrib.admin',

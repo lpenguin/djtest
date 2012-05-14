@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 08:27+0100\n"
+"POT-Creation-Date: 2012-02-27 13:45+0100\n"
 "PO-Revision-Date: 2011-11-30 17:27+0300\n"
 "Last-Translator: lilac penguin <lpenguin@yandex.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,77 +18,152 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: models.py:8 models.py:18 models.py:45
+#: admin.py:13
+#, fuzzy
+msgid "Results"
+msgstr "Тесты"
+
+#: forms.py:7
+msgid "FIO"
+msgstr "Ф.И.О."
+
+#: forms.py:8
+msgid "Home phone"
+msgstr "Домашний телефон"
+
+#: forms.py:9
+msgid "Cell phone"
+msgstr "Мобильный телефон"
+
+#: forms.py:10
+msgid "Age"
+msgstr "Возраст"
+
+#: forms.py:11
+msgid "Registration address"
+msgstr "Адрес постоянной регистрации"
+
+msgid "Email address"
+msgstr "Email"
+
+#: forms.py:12
+msgid "Living address"
+msgstr "Фактическое место жительства"
+
+#: forms.py:13
+msgid "Metro station"
+msgstr "Ближайшее метро"
+
+#: forms.py:14
+msgid "Family status"
+msgstr "Семейное положение"
+
+#: forms.py:15
+msgid "Years discount"
+msgstr "Опыт работы в продажах (количество лет)"
+
+#: forms.py:16
+msgid "Working home"
+msgstr "Опыт работы дизайнером"
+
+#: forms.py:17
+msgid "Knowed programs"
+msgstr "Знание программ (ПК) "
+
+#: models.py:26 models.py:36 models.py:64
 msgid "Name"
 msgstr "Имя"
 
-#: models.py:9 models.py:19 models.py:46
+#: models.py:27 models.py:37 models.py:65
 msgid "Description"
 msgstr "Описание"
 
-#: models.py:14 models.py:21
+#: models.py:32 models.py:40
 msgid "Property"
 msgstr "Качество"
 
-#: models.py:15
+#: models.py:33
 msgid "Properties"
 msgstr "Качества"
 
-#: models.py:20
+#: models.py:38
 msgid "Instruction"
 msgstr "Инструкция"
 
-#: models.py:22
+#: models.py:41
 msgid "Data"
 msgstr "Данные"
 
-#: models.py:23
+#: models.py:42
 msgid "Order"
 msgstr "Порядок"
 
-#: models.py:24
+#: models.py:43
 msgid "Time to make"
 msgstr "Время на выполение (сек.)"
 
-#: models.py:41 models.py:47 models.py:58
+#: models.py:44
+#, fuzzy
+msgid "Test type"
+msgstr "Тест"
+
+#: models.py:60 models.py:66 models.py:79
 msgid "Test"
 msgstr "Тест"
 
-#: models.py:42
+#: models.py:61
 msgid "Tests"
 msgstr "Тесты"
 
-#: models.py:53
+#: models.py:67
+msgid "Minimum value"
+msgstr "Минимальное значение"
+
+#: models.py:68
+msgid "Maximum value"
+msgstr "Максимальное значание"
+
+#: models.py:74
 msgid "Scale"
 msgstr "Шкала"
 
-#: models.py:54
+#: models.py:75
 msgid "Scales"
 msgstr "Шкалы"
 
-#: models.py:57
+#: models.py:78 models.py:90
 msgid "User"
 msgstr "Пользователь"
 
-#: models.py:59
+#: models.py:80 models.py:91
 msgid "Result data"
 msgstr "Результат"
 
-#: models.py:60
+#: models.py:81 models.py:92
 #, fuzzy
 msgid "Date"
 msgstr "Данные"
 
-#: models.py:65
+#: models.py:86
 #, fuzzy
 msgid "Test result"
 msgstr "Тесты"
 
-#: models.py:66
+#: models.py:87
 msgid "Test results"
 msgstr "Результаты теста"
 
-#: views.py:77
+#: models.py:101
+#, fuzzy
+msgid "Total test result"
+msgstr "Тесты"
+
+#: models.py:102
+#, fuzzy
+msgid "Total test results"
+msgstr "Результаты теста"
+
+#: views.py:92
 msgid "Incorrect password"
 msgstr "Неверный пароль"
 
